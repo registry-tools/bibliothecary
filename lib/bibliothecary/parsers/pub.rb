@@ -29,7 +29,7 @@ module Bibliothecary
         manifest = YAML.load file_contents
         dependencies = map_dependencies(manifest, "dependencies", "runtime", options.fetch(:filename, nil)) +
                        map_dependencies(manifest, "dev_dependencies", "development", options.fetch(:filename, nil))
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
       end
 
       def self.parse_yaml_lockfile(file_contents, options: {})

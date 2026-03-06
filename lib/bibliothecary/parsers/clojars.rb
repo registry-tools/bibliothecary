@@ -26,6 +26,8 @@ module Bibliothecary
         source = options.fetch(:filename, "project.clj")
         deps = []
 
+        project_name = file_contents.match(/defproject\s+([^\s]+)/)&.captures&.first
+
         # Find the :dependencies section and extract deps
         # Look for :dependencies followed by a vector of vectors
         if (deps_section = file_contents[/:dependencies\s*\[.*?\]\]/m])
@@ -40,7 +42,7 @@ module Bibliothecary
           end
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
     end
   end

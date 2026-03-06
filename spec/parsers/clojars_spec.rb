@@ -17,7 +17,7 @@ describe Bibliothecary::Parsers::Clojars do
         Bibliothecary::Dependency.new(platform: "clojars", name: "ring/ring-jetty-adapter", requirement: "1.2.1", type: "runtime", source: "project.clj"),
       ],
       kind: "manifest",
-      project_name: nil,
+      project_name: "clojars-json",
       success: true,
     })
   end

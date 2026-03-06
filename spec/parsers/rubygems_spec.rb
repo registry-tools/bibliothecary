@@ -57,7 +57,7 @@ describe Bibliothecary::Parsers::Rubygems do
     expect(described_class.analyse_contents("devise.gemspec", load_fixture("devise.gemspec"))).to eq({
                                                                                                        platform: "rubygems",
                                                                                                        path: "devise.gemspec",
-                                                                                                       project_name: nil,
+                                                                                                       project_name: "devise",
                                                                                                        dependencies: [
         Bibliothecary::Dependency.new(platform: "rubygems", name: "warden", requirement: "~> 1.2.3", type: "runtime", source: "devise.gemspec"),
         Bibliothecary::Dependency.new(platform: "rubygems", name: "orm_adapter", requirement: "~> 0.1", type: "development", source: "devise.gemspec"),

@@ -15,7 +15,7 @@ describe Bibliothecary::Parsers::Hex do
         Bibliothecary::Dependency.new(platform: "hex", name: "cowboy", requirement: "~> 1.0.0", type: "runtime", source: "mix.exs"),
       ],
       kind: "manifest",
-      project_name: nil,
+      project_name: "mixup",
       success: true,
     })
   end
@@ -51,7 +51,7 @@ describe Bibliothecary::Parsers::Hex do
         Bibliothecary::Dependency.new(platform: "hex", name: "gleeunit", requirement: ">= 1.3.0 and < 2.0.0", type: "development", source: "gleam.toml"),
       ],
       kind: "manifest",
-      project_name: nil,
+      project_name: "my_gleam_app",
       success: true,
     })
   end

@@ -31,6 +31,7 @@ module Bibliothecary
 
       def self.parse_conanfile_py(file_contents, options: {})
         dependencies = []
+        project_name = file_contents.match(/^\s*name\s*=\s*['"]([^'"]+)['"]/)&.captures&.first
 
         file_contents.scan(REQUIRES_PATTERN).each do |match|
           name, version = parse_conan_reference(match[0])
@@ -45,7 +46,7 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: project_name)
       end
 
       def self.parse_conanfile_txt(file_contents, options: {})

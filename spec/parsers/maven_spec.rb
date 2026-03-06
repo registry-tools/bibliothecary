@@ -14,7 +14,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
     expect(described_class.analyse_contents("pom.xml", load_fixture("pom.xml"))).to eq({
                                                                                          platform: "maven",
                                                                                          path: "pom.xml",
-                                                                                         project_name: nil,
+                                                                                         project_name: "echo",
                                                                                          dependencies: [
         Bibliothecary::Dependency.new(platform: "maven",
                                       name: "org.accidia:echo-parent",
@@ -210,7 +210,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
     expect(described_class.analyse_contents("pom.xml", load_fixture("pom2.xml"))).to eq({
                                                                                           platform: "maven",
                                                                                           path: "pom.xml",
-                                                                                          project_name: nil,
+                                                                                          project_name: "com.versioneye:versioneye-maven-plugin",
                                                                                           dependencies: [
         Bibliothecary::Dependency.new(platform: "maven",
                                       name: "org.apache.maven:maven-plugin-api",
@@ -262,7 +262,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
     expect(described_class.analyse_contents("pom.xml", load_fixture("pom-spaces-in-artifact-and-group.xml"))).to eq({
                                                                                                                       platform: "maven",
                                                                                                                       path: "pom.xml",
-                                                                                                                      project_name: nil,
+                                                                                                                      project_name: "com.versioneye:versioneye-maven-plugin",
                                                                                                                       dependencies: [
         Bibliothecary::Dependency.new(platform: "maven", name: "org.apache.maven:maven-plugin-api",
                                       requirement: "3.3.9",

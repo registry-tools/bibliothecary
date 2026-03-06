@@ -66,7 +66,8 @@ module Bibliothecary
         manifest = JSON.parse file_contents
         dependencies = map_dependencies(manifest, "require", "runtime", options.fetch(:filename, nil)) +
                        map_dependencies(manifest, "require-dev", "development", options.fetch(:filename, nil))
-        ParserResult.new(dependencies: dependencies)
+        project_name = manifest["name"]
+        ParserResult.new(dependencies: dependencies, project_name: project_name)
       end
 
       # Drupal hosts its own Composer repository, where its "modules" are indexed and searchable. The best way to

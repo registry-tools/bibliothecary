@@ -44,7 +44,7 @@ describe Bibliothecary::Parsers::Julia do
     expect(described_class.analyse_contents("Project.toml", load_fixture("julia/Project.toml"))).to eq({
       platform: "julia",
       path: "Project.toml",
-      project_name: nil,
+      project_name: "MyProject",
       dependencies: [
         Bibliothecary::Dependency.new(platform: "julia", name: "JSON", requirement: "*", type: "runtime", source: "Project.toml"),
         Bibliothecary::Dependency.new(platform: "julia", name: "HTTP", requirement: "*", type: "runtime", source: "Project.toml"),

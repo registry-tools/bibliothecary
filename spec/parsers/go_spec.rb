@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Go do
   it "parses depenencies from go.mod" do
     expect(described_class.analyse_contents("go.mod", load_fixture("go.mod"))).to eq({ platform: "go",
                                                                                        path: "go.mod",
-                                                                                       project_name: nil,
+                                                                                       project_name: "mod",
                                                                                        kind: "manifest",
                                                                                        success: true,
                                                                                        dependencies: [
@@ -80,7 +80,7 @@ describe Bibliothecary::Parsers::Go do
     expect(described_class.analyse_contents("go.mod", load_fixture("go.single-require.mod"))).to eq({
                                                                                                       platform: "go",
                                                                                                       path: "go.mod",
-                                                                                                      project_name: nil,
+                                                                                                      project_name: "mod",
                                                                                                       dependencies: [
         Bibliothecary::Dependency.new(platform: "go",
                                       name: "github.com/go-check/check",

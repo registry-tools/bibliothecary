@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Dub do
     expect(described_class.analyse_contents("dub.json", load_fixture("dub.json"))).to eq({
                                                                                            platform: "dub",
                                                                                            path: "dub.json",
-                                                                                           project_name: nil,
+                                                                                           project_name: "ddox",
                                                                                            dependencies: [
         Bibliothecary::Dependency.new(platform: "dub", name: "vibe-d", requirement: "~>0.7.22", type: "runtime", source: "dub.json"),
         Bibliothecary::Dependency.new(platform: "dub", name: "libdparse", requirement: { "optional" => true, "version" => "~>0.2.0" }, type: "runtime", source: "dub.json"),

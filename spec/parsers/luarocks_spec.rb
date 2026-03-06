@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::LuaRocks do
     expect(described_class.analyse_contents("example.rockspec", load_fixture("example.rockspec"))).to eq({
       platform: "luarocks",
       path: "example.rockspec",
-      project_name: nil,
+      project_name: "example",
       dependencies: [
         Bibliothecary::Dependency.new(platform: "luarocks", name: "lua", requirement: ">= 5.1", type: "runtime", source: "example.rockspec"),
         Bibliothecary::Dependency.new(platform: "luarocks", name: "luafilesystem", requirement: ">= 1.8.0", type: "runtime", source: "example.rockspec"),

@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Nimble do
     expect(described_class.analyse_contents("example.nimble", load_fixture("example.nimble"))).to eq({
       platform: "nimble",
       path: "example.nimble",
-      project_name: nil,
+      project_name: "example",
       dependencies: [
         Bibliothecary::Dependency.new(platform: "nimble", name: "nim", requirement: ">= 1.6.0", type: "runtime", source: "example.nimble"),
         Bibliothecary::Dependency.new(platform: "nimble", name: "chronos", requirement: ">= 3.0.0", type: "runtime", source: "example.nimble"),

@@ -20,6 +20,7 @@ describe Bibliothecary::Parsers::Conan do
     result = described_class.analyse_contents("conanfile.py", load_fixture("conanfile.py"))
     expect(result[:platform]).to eq("conan")
     expect(result[:kind]).to eq("manifest")
+    expect(result[:project_name]).to eq("mypackage")
     expect(result[:dependencies]).to eq([
       Bibliothecary::Dependency.new(name: "zlib", requirement: "1.2.11", type: "runtime", platform: "conan", source: "conanfile.py"),
       Bibliothecary::Dependency.new(name: "boost", requirement: "1.76.0", type: "runtime", platform: "conan", source: "conanfile.py"),

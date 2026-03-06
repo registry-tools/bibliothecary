@@ -150,6 +150,8 @@ module Bibliothecary
         source = options.fetch(:filename, nil)
         deps = []
 
+        project_name = file_contents.match(/\.\s*name\s*=\s*['"]([^'"]+)['"]/)&.captures&.first
+
         file_contents.each_line do |line|
           match = line.match(GEMSPEC_DEPENDENCY)
           next unless match
@@ -167,7 +169,7 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
 
       def self.build_requirement(ver1, ver2)

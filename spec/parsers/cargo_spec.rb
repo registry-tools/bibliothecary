@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Cargo do
     expect(described_class.analyse_contents("Cargo.toml", load_fixture("Cargo.toml"))).to eq({
                                                                                                platform: "cargo",
                                                                                                path: "Cargo.toml",
-                                                                                               project_name: nil,
+                                                                                               project_name: "update",
                                                                                                dependencies: [
         Bibliothecary::Dependency.new(platform: "cargo", name: "rustc-serialize", requirement: "*", type: "runtime", source: "Cargo.toml"),
         Bibliothecary::Dependency.new(platform: "cargo", name: "regex", requirement: "*", type: "runtime", source: "Cargo.toml"),

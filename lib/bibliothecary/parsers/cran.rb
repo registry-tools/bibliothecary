@@ -36,7 +36,7 @@ module Bibliothecary
                        parse_deps(fields["Suggests"], "suggests", source) +
                        parse_deps(fields["Enhances"], "enhances", source)
 
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: fields["Package"])
       end
 
       def self.parse_rfc822(contents)

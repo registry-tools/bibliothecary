@@ -100,6 +100,8 @@ module Bibliothecary
         deps = []
         seen_names = Set.new
 
+        project_name = file_contents.match(/\.\s*name\s*=\s*['"]([^'"]+)['"]/)&.captures&.first
+
         file_contents.each_line do |line|
           match = line.match(PODSPEC_DEPENDENCY)
           next unless match
@@ -121,7 +123,7 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
 
       def self.parse_podfile(file_contents, options: {})

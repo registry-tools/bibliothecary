@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Bazel do
     expect(described_class.analyse_contents("MODULE.bazel", load_fixture("MODULE.bazel"))).to eq({
                                                                                          platform: "bazel",
                                                                                          path: "MODULE.bazel",
-                                                                                         project_name: nil,
+                                                                                         project_name: "elemental2",
                                                                                          dependencies: [
         Bibliothecary::Dependency.new(platform: "bazel", name: "j2cl", requirement: "*", type: "runtime", source: "MODULE.bazel"),
         Bibliothecary::Dependency.new(platform: "bazel", name: "jsinterop_generator", requirement: "20250812", type: "runtime", source: "MODULE.bazel"),

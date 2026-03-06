@@ -179,7 +179,7 @@ module Bibliothecary
             )
           end
 
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
       end
 
       def self.parse_yarn_lock(file_contents, options: {})

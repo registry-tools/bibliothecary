@@ -45,7 +45,7 @@ module Bibliothecary
         end
 
         dependencies = parsed_dependencies.flatten.compact
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: manifest.dig("package", "name"))
       end
 
       def self.parse_lockfile(file_contents, options: {})

@@ -15,7 +15,7 @@ describe Bibliothecary::Parsers::SwiftPM do
         Bibliothecary::Dependency.new(platform: "swiftpm", name: "github.com/czechboy0/Environment", requirement: "0.4.0 - 0.4.9223372036854775807", type: "runtime", source: "Package.swift"),
       ],
       kind: "manifest",
-      project_name: nil,
+      project_name: "swift-package-converter",
       success: true,
     })
   end

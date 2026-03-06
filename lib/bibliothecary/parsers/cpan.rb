@@ -47,13 +47,13 @@ module Bibliothecary
         dependencies = manifest["prereqs"].map do |_group, deps|
           map_dependencies(deps, "requires", "runtime", options.fetch(:filename, nil))
         end.flatten
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
       end
 
       def self.parse_yaml_manifest(file_contents, options: {})
         manifest = YAML.load file_contents
         dependencies = map_dependencies(manifest, "requires", "runtime", options.fetch(:filename, nil))
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
       end
 
       def self.parse_cpanfile(file_contents, options: {})

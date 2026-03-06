@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Pypi do
     expect(described_class.analyse_contents("setup.py", load_fixture("setup.py"))).to eq({
                                                                                            platform: "pypi",
                                                                                            path: "setup.py",
-                                                                                           project_name: nil,
+                                                                                           project_name: "political-memory",
                                                                                            dependencies: [
         Bibliothecary::Dependency.new(platform: "pypi", name: "Install", requirement: "*", type: "runtime", source: "setup.py"),
         Bibliothecary::Dependency.new(platform: "pypi", name: "django-bootstrap3", requirement: ">=6.2,<6.3", type: "runtime", source: "setup.py"),
@@ -515,7 +515,7 @@ describe Bibliothecary::Parsers::Pypi do
     expect(results[:platform]).to eq("pypi")
     expect(results[:path]).to eq("pyproject.toml")
     expect(results[:kind]).to eq("manifest")
-    expect(results[:project_name]).to eq(nil)
+    expect(results[:project_name]).to eq("tidelift")
     expect(results[:success]).to eq(true)
     expect(results[:dependencies]).to match_array([
       Bibliothecary::Dependency.new(platform: "pypi", name: "python", requirement: "^3.7", type: "runtime", source: "pyproject.toml"),
@@ -567,7 +567,7 @@ describe Bibliothecary::Parsers::Pypi do
     expect(results[:platform]).to eq("pypi")
     expect(results[:path]).to eq("pyproject.toml")
     expect(results[:kind]).to eq("manifest")
-    expect(results[:project_name]).to eq(nil)
+    expect(results[:project_name]).to eq("a_pep621_project")
     expect(results[:success]).to eq(true)
     expect(results[:dependencies]).to eq([
         Bibliothecary::Dependency.new(platform: "pypi", name: "black", requirement: "*", type: "runtime", source: "pyproject.toml"),

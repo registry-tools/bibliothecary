@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Shard do
     expect(described_class.analyse_contents("shard.yml", load_fixture("shard.yml"))).to eq({
                                                                                              platform: "shard",
                                                                                              path: "shard.yml",
-                                                                                             project_name: nil,
+                                                                                             project_name: "registry",
                                                                                              dependencies: [
         Bibliothecary::Dependency.new(platform: "shard", name: "frost", requirement: "*", type: "runtime", source: "shard.yml"),
         Bibliothecary::Dependency.new(platform: "shard", name: "shards", requirement: "*", type: "runtime", source: "shard.yml"),

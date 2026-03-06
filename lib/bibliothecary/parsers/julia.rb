@@ -69,7 +69,7 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: manifest["name"])
       end
 
       def self.parse_manifest_toml(file_contents, options: {})

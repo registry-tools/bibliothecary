@@ -25,6 +25,7 @@ module Bibliothecary
 
       def self.parse_nimble(file_contents, options: {})
         source = options.fetch(:filename, nil)
+        project_name = source ? File.basename(source.to_s, ".nimble") : nil
         deps = []
 
         file_contents.each_line do |line|
@@ -53,7 +54,7 @@ module Bibliothecary
           end
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
     end
   end

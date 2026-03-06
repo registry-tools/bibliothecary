@@ -51,7 +51,7 @@ describe Bibliothecary::Parsers::Hackage do
         Bibliothecary::Dependency.new(platform: "hackage", name: "text", requirement: "==1.2.*", type: "test", source: "example.cabal"),
       ],
       kind: "manifest",
-      project_name: nil,
+      project_name: "cabal-parser",
       success: true,
     })
   end

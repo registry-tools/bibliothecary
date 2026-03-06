@@ -64,7 +64,7 @@ describe Bibliothecary::Parsers::CocoaPods do
     expect(described_class.analyse_contents("example.podspec", load_fixture("example.podspec"))).to eq({
                                                                                                          platform: "cocoapods",
                                                                                                          path: "example.podspec",
-                                                                                                         project_name: nil,
+                                                                                                         project_name: "CocoaLumberjack",
                                                                                                          dependencies: [
         Bibliothecary::Dependency.new(platform: "cocoapods", name: "CocoaLumberjack", requirement: ">= 0", type: "runtime", source: "example.podspec"),
       ],

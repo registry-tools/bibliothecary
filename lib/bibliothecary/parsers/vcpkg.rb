@@ -59,7 +59,7 @@ module Bibliothecary
           )
         end.compact.uniq
 
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: json["name"])
       end
 
       def self.parse_vcpkg_list_json(file_contents, options: {})

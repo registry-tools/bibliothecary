@@ -26,7 +26,7 @@ module Bibliothecary
         json = JSON.parse(file_contents)
         dependencies = map_dependencies(json, "dependencies", "runtime", options.fetch(:filename, nil)) +
                        map_dependencies(json, "devDependencies", "development", options.fetch(:filename, nil))
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: json["name"])
       end
     end
   end

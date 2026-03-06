@@ -21,6 +21,7 @@ module Bibliothecary
 
       def self.parse_rockspec(file_contents, options: {})
         source = options.fetch(:filename, nil)
+        project_name = file_contents.match(/^package\s*=\s*['"]([^'"]+)['"]/)&.captures&.first
         deps = []
 
         # Find dependencies table in Lua format
@@ -51,7 +52,7 @@ module Bibliothecary
           end
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
     end
   end

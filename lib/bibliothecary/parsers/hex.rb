@@ -57,6 +57,8 @@ module Bibliothecary
         # Remove comments before parsing
         content = file_contents.gsub(/#.*$/, "")
 
+        project_name = content.match(/app:\s*:(\w+)/)&.captures&.first
+
         # Match deps in the dependencies list: {:name, "~> version"} or {:name, ">= version"}
         # Format: {:dep_name, "requirement"} or {:dep_name, "requirement", opts}
         content.scan(/\{:(\w+),\s*"([^"]+)"/) do |name, requirement|
@@ -69,7 +71,7 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
 
       def self.parse_mix_lock(file_contents, options: {})
@@ -127,7 +129,7 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: manifest["name"])
       end
 
       def self.parse_gleam_manifest(file_contents, options: {})

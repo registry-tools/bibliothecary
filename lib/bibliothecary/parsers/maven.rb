@@ -511,7 +511,19 @@ module Bibliothecary
 
       def self.parse_standalone_pom_manifest(file_contents, options: {})
         dependencies = parse_pom_manifest(file_contents, {}, options:)
-        ParserResult.new(dependencies: dependencies)
+
+        doc = Ox.parse(file_contents)
+        project = doc.respond_to?("project") ? doc.project : doc
+
+        artifact_id = project.locate("artifactId").first&.nodes&.first
+        group_id = project.locate("groupId").first&.nodes&.first
+        project_name = if group_id && !group_id.to_s.strip.empty?
+                         "#{group_id.to_s.strip}:#{artifact_id.to_s.strip}"
+                       elsif artifact_id
+                         artifact_id.to_s.strip
+                       end
+
+        ParserResult.new(dependencies: dependencies, project_name: project_name)
       end
 
       def self.parse_pom_manifest(file_contents, parent_properties = {}, options: {})

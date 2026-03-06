@@ -39,6 +39,8 @@ module Bibliothecary
         # Remove comments (but not :// in URLs)
         content = file_contents.gsub(%r{(?<!:)//.*$}, "")
 
+        project_name = content.match(/Package\s*\(\s*name:\s*"([^"]+)"/)&.captures&.first
+
         # Legacy format: .Package(url: "...", majorVersion: X, minor: Y)
         content.scan(PACKAGE_REGEXP_LEGACY) do |url, major, minor|
           name = url.gsub(%r{^https?://}, "").gsub(/\.git$/, "")
@@ -90,7 +92,7 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
 
       def self.parse_package_resolved(file_contents, options: {})

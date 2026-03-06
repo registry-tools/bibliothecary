@@ -169,7 +169,9 @@ module Bibliothecary
 
             replaced_dep || dep
           end
-        ParserResult.new(dependencies: dependencies)
+
+        project_name = file_contents.match(/^module\s+(\S+)/)&.captures&.first
+        ParserResult.new(dependencies: dependencies, project_name: project_name)
       end
 
       def self.parse_go_mod_categorized_deps(file_contents, source)

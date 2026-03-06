@@ -44,6 +44,7 @@ module Bibliothecary
       def self.parse_cabal(file_contents, options: {})
         source = options.fetch(:filename, "package.cabal")
         deps = []
+        project_name = file_contents.lines.find { |l| l.match?(/^name:/i) }&.match(/^name:\s*(.+)$/i)&.captures&.first&.strip
 
         # Track current section type
         current_section = nil
@@ -103,7 +104,7 @@ module Bibliothecary
           end
         end
 
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
 
       def self.parse_deps_line(line, deps, section, dep_type, source)

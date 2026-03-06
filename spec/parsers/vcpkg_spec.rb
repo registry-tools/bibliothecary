@@ -30,7 +30,7 @@ describe Bibliothecary::Parsers::Vcpkg do
         Bibliothecary::Dependency.new(platform: "vcpkg", name: "basisu", requirement: "*", type: "development", source: "vcpkg.json")
       ],
       kind: 'manifest',
-      project_name: nil,
+      project_name: "warzone2100",
       success: true
     })
   end

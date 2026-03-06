@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Packagist do
     expect(described_class.analyse_contents("composer.json", load_fixture("composer.json"))).to eq({
                                                                                                      platform: "packagist",
                                                                                                      path: "composer.json",
-                                                                                                     project_name: nil,
+                                                                                                     project_name: "laravel/laravel",
                                                                                                      dependencies: [
         Bibliothecary::Dependency.new(platform: "packagist", name: "laravel/framework", requirement: "5.0.*", type: "runtime", source: "composer.json"),
         Bibliothecary::Dependency.new(platform: "packagist", name: "drupal/address", requirement: "^1.0", type: "runtime", source: "composer.json"),

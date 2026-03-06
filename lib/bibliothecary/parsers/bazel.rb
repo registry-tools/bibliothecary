@@ -40,6 +40,7 @@ module Bibliothecary
 
       def self.parse_module_bazel(file_contents, options: {})
         source = options.fetch(:filename, nil)
+        project_name = file_contents.match(/module\s*\(\s*name\s*=\s*"([^"]+)"/)&.captures&.first
 
         dependencies = file_contents.scan(BAZEL_DEP_STATEMENT).filter_map do |(statement)|
           name_match = statement.match(DEPENDENCY_NAME)
@@ -58,7 +59,7 @@ module Bibliothecary
             source: source
           )
         end
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: project_name)
       end
     end
   end

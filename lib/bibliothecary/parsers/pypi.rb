@@ -186,6 +186,9 @@ module Bibliothecary
 
         file_contents = Tomlrb.parse(file_contents)
 
+        project_name = file_contents.dig("project", "name") ||
+                       file_contents.dig("tool", "poetry", "name")
+
         # Parse poetry [tool.poetry] deps
         poetry_manifest = file_contents.fetch("tool", {}).fetch("poetry", {})
         deps += map_dependencies(poetry_manifest["dependencies"], "runtime", options.fetch(:filename, nil))
@@ -218,7 +221,7 @@ module Bibliothecary
             original_name: normalized_name == dep.name ? nil : dep.name
           )
         end
-        ParserResult.new(dependencies: dependencies)
+        ParserResult.new(dependencies: dependencies, project_name: project_name)
       end
 
       def self.map_dependencies(packages, type, source = nil)
@@ -337,9 +340,13 @@ module Bibliothecary
         ParserResult.new(dependencies: deps)
       end
 
+      SETUP_PY_NAME_REGEXP = /name\s*=\s*['"]([^'"]+)['"]/
+
       def self.parse_setup_py(file_contents, options: {})
+        project_name = file_contents.match(SETUP_PY_NAME_REGEXP)&.then { |m| m[1] }
+
         match = file_contents.match(INSTALL_REGEXP)
-        return ParserResult.new(dependencies: []) unless match
+        return ParserResult.new(dependencies: [], project_name: project_name) unless match
 
         deps = []
         match[1].gsub(/',(\s)?'/, "\n").split("\n").each do |line|
@@ -356,7 +363,7 @@ module Bibliothecary
             platform: platform_name
           )
         end
-        ParserResult.new(dependencies: deps)
+        ParserResult.new(dependencies: deps, project_name: project_name)
       end
 
       # While the thing in the repo that PyPI is using might be either in

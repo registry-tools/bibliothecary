@@ -11,7 +11,7 @@ describe Bibliothecary::Parsers::Deno do
     expect(described_class.analyse_contents("deno.json", load_fixture("deno.json"))).to eq({
       platform: "deno",
       path: "deno.json",
-      project_name: nil,
+      project_name: "my-deno-app",
       dependencies: [
         Bibliothecary::Dependency.new(platform: "deno", name: "chalk", requirement: "5.3.0", type: "runtime", source: "deno.json"),
         Bibliothecary::Dependency.new(platform: "deno", name: "lodash", requirement: "*", type: "runtime", source: "deno.json"),

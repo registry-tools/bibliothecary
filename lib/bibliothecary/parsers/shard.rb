@@ -35,7 +35,7 @@ module Bibliothecary
         manifest = YAML.load file_contents
         dependencies = map_dependencies(manifest, "dependencies", "runtime", options.fetch(:filename, nil)) +
                        map_dependencies(manifest, "development_dependencies", "runtime", options.fetch(:filename, nil))
-        Bibliothecary::ParserResult.new(dependencies: dependencies)
+        Bibliothecary::ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
       end
 
       def self.map_dependencies(hash, key, type, source = nil)

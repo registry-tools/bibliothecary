@@ -188,7 +188,16 @@ module Bibliothecary
           .compact
 
         dependencies = packages.uniq(&:name)
-        ParserResult.new(dependencies: dependencies)
+
+        property_group = project.locate("PropertyGroup").first
+        project_name = if property_group
+                         package_id = property_group.locate("PackageId").first&.nodes&.first&.to_s
+                         assembly_name = property_group.locate("AssemblyName").first&.nodes&.first&.to_s
+                         name = package_id || assembly_name
+                         name && !name.strip.empty? ? name.strip : nil
+                       end
+
+        ParserResult.new(dependencies: dependencies, project_name: project_name)
       rescue StandardError
         ParserResult.new(dependencies: [])
       end
