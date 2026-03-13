@@ -42,7 +42,9 @@ module Bibliothecary
           end
         end
 
-        ParserResult.new(dependencies: deps, project_name: project_name)
+        repository_url = URLNormalizer.normalize(file_contents.match(/:url\s+"([^"]+)"/)&.captures&.first)
+
+        ParserResult.new(dependencies: deps, project_name: project_name, repository_url: repository_url)
       end
     end
   end

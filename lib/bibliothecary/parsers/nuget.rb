@@ -197,14 +197,20 @@ module Bibliothecary
                          name && !name.strip.empty? ? name.strip : nil
                        end
 
-        ParserResult.new(dependencies: dependencies, project_name: project_name)
+        repository_url = if property_group
+                           raw = property_group.locate("RepositoryUrl").first&.nodes&.first&.to_s&.strip
+                           URLNormalizer.normalize(raw) if raw && URLNormalizer.forge_url?(raw)
+                         end
+
+        ParserResult.new(dependencies: dependencies, project_name: project_name, repository_url: repository_url)
       rescue StandardError
         ParserResult.new(dependencies: [])
       end
 
       def self.parse_nuspec(file_contents, options: {})
         manifest = Ox.parse file_contents
-        dependencies = manifest.package.metadata.dependencies.locate("dependency").map do |dependency|
+        metadata = manifest.package.metadata
+        dependencies = metadata.dependencies.locate("dependency").map do |dependency|
           Dependency.new(
             name: dependency.id,
             requirement: dependency.attributes[:version],
@@ -213,7 +219,18 @@ module Bibliothecary
             platform: platform_name
           )
         end
-        ParserResult.new(dependencies: dependencies)
+
+        repository_url = begin
+          repo_url = metadata.locate("repository").first&.attributes&.[](:url)&.strip
+          if repo_url && URLNormalizer.forge_url?(repo_url)
+            URLNormalizer.normalize(repo_url)
+          else
+            project_url = metadata.locate("projectUrl").first&.nodes&.first&.to_s&.strip
+            URLNormalizer.normalize(project_url) if project_url && URLNormalizer.forge_url?(project_url)
+          end
+        end
+
+        ParserResult.new(dependencies: dependencies, repository_url: repository_url)
       rescue StandardError
         ParserResult.new(dependencies: [])
       end

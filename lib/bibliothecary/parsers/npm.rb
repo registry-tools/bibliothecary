@@ -179,7 +179,11 @@ module Bibliothecary
             )
           end
 
-        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
+        ParserResult.new(
+          dependencies: dependencies,
+          project_name: manifest["name"],
+          repository_url: normalize_repository_url(manifest["repository"])
+        )
       end
 
       def self.parse_yarn_lock(file_contents, options: {})
@@ -510,6 +514,32 @@ module Bibliothecary
         else
           files.values
         end
+      end
+
+      private_class_method def self.normalize_repository_url(repo)
+        return nil if repo.nil?
+
+        url = if repo.is_a?(Hash)
+                repo["url"]
+              else
+                str = repo.to_s.strip
+                if str.start_with?("github:")
+                  "https://github.com/#{str.delete_prefix("github:")}"
+                elsif str.start_with?("gitlab:")
+                  "https://gitlab.com/#{str.delete_prefix("gitlab:")}"
+                elsif str.start_with?("bitbucket:")
+                  "https://bitbucket.org/#{str.delete_prefix("bitbucket:")}"
+                elsif str.match?(%r{\Ahttps?://})
+                  str
+                elsif str.match?(%r{\A[^/]+/[^/]+\z})
+                  # bare "user/repo" shorthand defaults to GitHub
+                  "https://github.com/#{str}"
+                else
+                  str
+                end
+              end
+
+        URLNormalizer.normalize(url)
       end
 
       private_class_method def self.transform_tree_to_array(deps_by_name, source = nil)

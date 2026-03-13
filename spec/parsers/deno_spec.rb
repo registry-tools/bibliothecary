@@ -20,6 +20,7 @@ describe Bibliothecary::Parsers::Deno do
       ],
       kind: "manifest",
       success: true,
+      repository_url: nil,
     })
   end
 
@@ -36,6 +37,7 @@ describe Bibliothecary::Parsers::Deno do
       ],
       kind: "lockfile",
       success: true,
+      repository_url: nil,
     })
   end
 

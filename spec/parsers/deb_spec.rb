@@ -26,6 +26,7 @@ describe Bibliothecary::Parsers::Deb do
       kind: "manifest",
       project_name: nil,
       success: true,
+      repository_url: nil,
     })
   end
 

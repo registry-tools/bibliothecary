@@ -29,7 +29,12 @@ module Bibliothecary
         manifest = YAML.load file_contents
         dependencies = map_dependencies(manifest, "dependencies", "runtime", options.fetch(:filename, nil)) +
                        map_dependencies(manifest, "dev_dependencies", "development", options.fetch(:filename, nil))
-        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
+
+        repo = manifest["repository"]
+        repo ||= manifest["homepage"] if URLNormalizer.forge_url?(manifest["homepage"])
+        repository_url = URLNormalizer.normalize(repo)
+
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"], repository_url: repository_url)
       end
 
       def self.parse_yaml_lockfile(file_contents, options: {})

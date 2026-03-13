@@ -3,6 +3,7 @@
 require "bibliothecary/version"
 require "bibliothecary/dependency"
 require "bibliothecary/parser_result"
+require "bibliothecary/url_normalizer"
 require "bibliothecary/analyser"
 require "bibliothecary/configuration"
 require "bibliothecary/runner"

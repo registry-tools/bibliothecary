@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <metadata xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <id>ExamplePackage</id>
+    <version>1.0.0</version>
+    <authors>Example Author</authors>
+    <projectUrl>http://example.com</projectUrl>
+    <repository url="https://github.com/example/nuget-test" type="git" />
+    <description>Example package with repository URL</description>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="13.0.1" />
+    </dependencies>
+  </metadata>
+</package>

@@ -36,7 +36,15 @@ module Bibliothecary
                        parse_deps(fields["Suggests"], "suggests", source) +
                        parse_deps(fields["Enhances"], "enhances", source)
 
-        ParserResult.new(dependencies: dependencies, project_name: fields["Package"])
+        ParserResult.new(dependencies: dependencies, project_name: fields["Package"], repository_url: extract_repository_url(fields))
+      end
+
+      def self.extract_repository_url(fields)
+        url_field = fields["URL"]
+        return nil unless url_field
+
+        urls = url_field.split(/,\s*/).map(&:strip).reject(&:empty?)
+        URLNormalizer.normalize(urls.find { |u| URLNormalizer.forge_url?(u) } || urls.first)
       end
 
       def self.parse_rfc822(contents)

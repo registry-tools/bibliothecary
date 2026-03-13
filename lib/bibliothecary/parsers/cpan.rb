@@ -47,13 +47,43 @@ module Bibliothecary
         dependencies = manifest["prereqs"].map do |_group, deps|
           map_dependencies(deps, "requires", "runtime", options.fetch(:filename, nil))
         end.flatten
-        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
+        repository_url = extract_json_repository_url(manifest)
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"], repository_url: repository_url)
       end
 
       def self.parse_yaml_manifest(file_contents, options: {})
         manifest = YAML.load file_contents
         dependencies = map_dependencies(manifest, "requires", "runtime", options.fetch(:filename, nil))
-        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
+        repository_url = extract_yaml_repository_url(manifest)
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"], repository_url: repository_url)
+      end
+
+      def self.extract_json_repository_url(manifest)
+        repo = manifest.dig("resources", "repository")
+        url = if repo.is_a?(Hash)
+                repo["url"]
+              elsif repo.is_a?(String)
+                repo
+              end
+        url = URLNormalizer.normalize(url)
+        return url if url
+
+        homepage = manifest.dig("resources", "homepage")
+        URLNormalizer.forge_url?(homepage) ? URLNormalizer.normalize(homepage) : nil
+      end
+
+      def self.extract_yaml_repository_url(manifest)
+        repo = manifest.dig("resources", "repository")
+        url = if repo.is_a?(Hash)
+                repo["url"] || repo["web"]
+              elsif repo.is_a?(String)
+                repo
+              end
+        url = URLNormalizer.normalize(url)
+        return url if url
+
+        homepage = manifest.dig("resources", "homepage")
+        URLNormalizer.forge_url?(homepage) ? URLNormalizer.normalize(homepage) : nil
       end
 
       def self.parse_cpanfile(file_contents, options: {})

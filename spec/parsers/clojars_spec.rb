@@ -19,6 +19,7 @@ describe Bibliothecary::Parsers::Clojars do
       kind: "manifest",
       project_name: "clojars-json",
       success: true,
+      repository_url: "http://example.com/FIXME",
     })
   end
 

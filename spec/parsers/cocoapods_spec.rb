@@ -39,6 +39,7 @@ describe Bibliothecary::Parsers::CocoaPods do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
+                                                                                         repository_url: nil,
                                                                                        })
   end
 
@@ -50,6 +51,7 @@ describe Bibliothecary::Parsers::CocoaPods do
                                 project_name: nil,
                                 kind: "lockfile",
                                 success: true,
+                                repository_url: nil,
                               })
     expect(result[:dependencies].length).to eq(50)
     # Spot check dependencies with integrity from SPEC CHECKSUMS section
@@ -70,6 +72,7 @@ describe Bibliothecary::Parsers::CocoaPods do
       ],
                                                                                                          kind: "manifest",
                                                                                                          success: true,
+                                                                                                         repository_url: "https://github.com/CocoaLumberjack/CocoaLumberjack",
                                                                                                        })
   end
 
@@ -83,6 +86,7 @@ describe Bibliothecary::Parsers::CocoaPods do
       ],
                                                                                                                    kind: "manifest",
                                                                                                                    success: true,
+                                                                                                                   repository_url: "https://github.com/AddAloner/ALOSRPAuth",
                                                                                                                  })
   end
 

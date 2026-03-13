@@ -20,6 +20,7 @@ describe Bibliothecary::Parsers::Elm do
       ],
                                                                                                            kind: "manifest",
                                                                                                            success: true,
+                                                                                                           repository_url: "https://github.com/elm-lang/package.elm-lang.org",
                                                                                                          })
   end
 
@@ -34,6 +35,7 @@ describe Bibliothecary::Parsers::Elm do
       ],
                                                                                                                      kind: "manifest",
                                                                                                                      success: true,
+                                                                                                                     repository_url: "https://github.com/USER/PROJECT",
                                                                                                                    })
   end
 
@@ -51,6 +53,7 @@ describe Bibliothecary::Parsers::Elm do
       ],
                                                                                                                                    kind: "lockfile",
                                                                                                                                    success: true,
+                                                                                                                                   repository_url: nil,
                                                                                                                                  })
   end
 

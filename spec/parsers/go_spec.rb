@@ -14,6 +14,7 @@ describe Bibliothecary::Parsers::Go do
                                                                                        project_name: "mod",
                                                                                        kind: "manifest",
                                                                                        success: true,
+                                                                                       repository_url: nil,
                                                                                        dependencies: [
       Bibliothecary::Dependency.new(platform: "go",
 
@@ -91,6 +92,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                       kind: "manifest",
                                                                                                       success: true,
+                                                                                                      repository_url: nil,
                                                                                                     })
   end
 
@@ -145,6 +147,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                        kind: "lockfile",
                                                                                        success: true,
+                                                                                       repository_url: nil,
                                                                                      })
   end
 
@@ -177,6 +180,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                kind: "manifest",
                                                                                                success: true,
+                                                                                               repository_url: nil,
                                                                                              })
   end
 
@@ -209,6 +213,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                kind: "lockfile",
                                                                                                success: true,
+                                                                                               repository_url: nil,
                                                                                              })
   end
 
@@ -291,6 +296,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                         kind: "manifest",
                                                                                                         success: true,
+                                                                                                        repository_url: nil,
                                                                                                       })
   end
 
@@ -308,6 +314,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                      kind: "manifest",
                                                                                                      success: true,
+                                                                                                     repository_url: nil,
                                                                                                    })
   end
 
@@ -345,6 +352,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                        kind: "manifest",
                                                                                        success: true,
+                                                                                       repository_url: nil,
                                                                                      })
   end
 
@@ -382,6 +390,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                         kind: "manifest",
                                                                                                         success: true,
+                                                                                                        repository_url: nil,
                                                                                                       })
   end
 
@@ -434,6 +443,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                kind: "manifest",
                                                                                                success: true,
+                                                                                               repository_url: nil,
                                                                                              })
   end
 
@@ -516,6 +526,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                kind: "lockfile",
                                                                                                success: true,
+                                                                                               repository_url: nil,
                                                                                              })
   end
 
@@ -612,6 +623,7 @@ describe Bibliothecary::Parsers::Go do
       ],
                                                                                                                                      kind: "lockfile",
                                                                                                                                      success: true,
+                                                                                                                                     repository_url: nil,
                                                                                                                                    })
   end
 

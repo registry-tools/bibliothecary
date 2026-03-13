@@ -197,6 +197,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
+                                                                                         repository_url: "https://github.com/accidia/echo",
                                                                                        })
   end
 
@@ -255,6 +256,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                           kind: "manifest",
                                                                                           success: true,
+                                                                                          repository_url: "https://github.com/versioneye/versioneye_maven_plugin",
                                                                                         })
   end
 
@@ -300,6 +302,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                                                       kind: "manifest",
                                                                                                                       success: true,
+                                                                                                                      repository_url: "https://github.com/versioneye/versioneye_maven_plugin",
                                                                                                                     })
   end
 
@@ -324,6 +327,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
+                                                                                         repository_url: nil,
                                                                                        })
   end
 
@@ -376,6 +380,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
         ],
                                                                                                      kind: "manifest",
                                                                                                      success: true,
+                                                                                                     repository_url: nil,
                                                                                                    })
     end
 
@@ -393,6 +398,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
         ],
                                                                                                              kind: "manifest",
                                                                                                              success: true,
+                                                                                                             repository_url: nil,
                                                                                                            })
     end
   end
@@ -407,6 +413,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                                                                                            kind: "lockfile",
                                                                                                                                                            success: true,
+                                                                                                                                                           repository_url: nil,
                                                                                                                                                          })
   end
 
@@ -427,6 +434,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                                                                                                kind: "lockfile",
                                                                                                                                                                success: true,
+                                                                                                                                                               repository_url: nil,
                                                                                                                                                              })
   end
 

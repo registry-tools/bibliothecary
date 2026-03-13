@@ -20,6 +20,7 @@ describe Bibliothecary::Parsers::Packagist do
       ],
                                                                                                      kind: "manifest",
                                                                                                      success: true,
+                                                                                                     repository_url: "https://github.com/laravel/laravel",
                                                                                                    })
   end
 
@@ -42,6 +43,7 @@ describe Bibliothecary::Parsers::Packagist do
       ],
                                                                                                      kind: "lockfile",
                                                                                                      success: true,
+                                                                                                     repository_url: nil,
                                                                                                    })
   end
 

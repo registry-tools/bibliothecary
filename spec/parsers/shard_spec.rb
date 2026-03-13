@@ -21,6 +21,7 @@ describe Bibliothecary::Parsers::Shard do
       ],
                                                                                              kind: "manifest",
                                                                                              success: true,
+                                                                                             repository_url: nil,
                                                                                            })
   end
 
@@ -40,6 +41,7 @@ describe Bibliothecary::Parsers::Shard do
       ],
                                                                                                kind: "lockfile",
                                                                                                success: true,
+                                                                                               repository_url: nil,
                                                                                              })
   end
 

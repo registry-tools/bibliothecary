@@ -20,6 +20,8 @@ module Bibliothecary
 
       # Gemspec pattern - captures type in first group
       GEMSPEC_DEPENDENCY = /\.add_(development_|runtime_)?dependency\s*\(?\s*['"]([^'"]+)['"]\s*(?:,\s*['"]([^'"]+)['"])?(?:\s*,\s*['"]([^'"]+)['"])?\s*\)?/
+      GEMSPEC_SOURCE_CODE_URI = /\.metadata\s*\[?\s*['"]source_code_uri['"]\s*\]?\s*=\s*['"]([^'"]+)['"]/
+      GEMSPEC_HOMEPAGE = /\.homepage\s*=\s*['"]([^'"]+)['"]/
 
       def self.file_patterns
         ["Gemfile", "Gemfile.lock", "gems.rb", "gems.locked", "*.gemspec"]
@@ -152,6 +154,8 @@ module Bibliothecary
 
         project_name = file_contents.match(/\.\s*name\s*=\s*['"]([^'"]+)['"]/)&.captures&.first
 
+        repository_url = extract_gemspec_repository_url(file_contents)
+
         file_contents.each_line do |line|
           match = line.match(GEMSPEC_DEPENDENCY)
           next unless match
@@ -169,7 +173,15 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: deps, project_name: project_name)
+        ParserResult.new(dependencies: deps, project_name: project_name, repository_url: repository_url)
+      end
+
+      def self.extract_gemspec_repository_url(file_contents)
+        source_code_uri = file_contents.match(GEMSPEC_SOURCE_CODE_URI)&.captures&.first
+        return URLNormalizer.normalize(source_code_uri) if source_code_uri
+
+        homepage = file_contents.match(GEMSPEC_HOMEPAGE)&.captures&.first
+        URLNormalizer.forge_url?(homepage) ? URLNormalizer.normalize(homepage) : nil
       end
 
       def self.build_requirement(ver1, ver2)

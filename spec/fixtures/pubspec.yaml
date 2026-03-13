@@ -11,6 +11,7 @@ authors:
 - Rado Kirov <radokirov@google.com>
 description: Angular for dart.
 homepage: https://angulardart.org
+repository: https://github.com/angulardart/angular
 environment:
   sdk: '>=1.4.0'
 dependencies:

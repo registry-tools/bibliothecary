@@ -67,7 +67,16 @@ module Bibliothecary
         dependencies = map_dependencies(manifest, "require", "runtime", options.fetch(:filename, nil)) +
                        map_dependencies(manifest, "require-dev", "development", options.fetch(:filename, nil))
         project_name = manifest["name"]
-        ParserResult.new(dependencies: dependencies, project_name: project_name)
+        repository_url = extract_manifest_repository_url(manifest)
+        ParserResult.new(dependencies: dependencies, project_name: project_name, repository_url: repository_url)
+      end
+
+      def self.extract_manifest_repository_url(manifest)
+        source = manifest.dig("support", "source")
+        return URLNormalizer.normalize(source) if source
+
+        homepage = manifest["homepage"]
+        URLNormalizer.forge_url?(homepage) ? URLNormalizer.normalize(homepage) : nil
       end
 
       # Drupal hosts its own Composer repository, where its "modules" are indexed and searchable. The best way to

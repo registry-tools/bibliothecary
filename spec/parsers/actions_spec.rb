@@ -14,7 +14,8 @@ describe Bibliothecary::Parsers::Actions do
       ],
       kind: 'manifest',
       project_name: nil,
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 
@@ -27,7 +28,8 @@ describe Bibliothecary::Parsers::Actions do
       ],
       kind: 'manifest',
       project_name: nil,
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 
@@ -41,7 +43,8 @@ describe Bibliothecary::Parsers::Actions do
       ],
       kind: 'manifest',
       project_name: nil,
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 
@@ -59,7 +62,8 @@ describe Bibliothecary::Parsers::Actions do
       ],
       kind: 'manifest',
       project_name: nil,
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 

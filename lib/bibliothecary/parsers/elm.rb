@@ -35,7 +35,8 @@ module Bibliothecary
             platform: platform_name
           )
         end
-        ParserResult.new(dependencies: dependencies)
+        repository_url = URLNormalizer.normalize(manifest["repository"])
+        ParserResult.new(dependencies: dependencies, repository_url: repository_url)
       end
 
       def self.parse_json_lock(file_contents, options: {})

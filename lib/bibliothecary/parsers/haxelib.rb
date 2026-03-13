@@ -32,7 +32,9 @@ module Bibliothecary
             platform: platform_name
           )
         end
-        ParserResult.new(dependencies: dependencies, project_name: manifest["name"])
+        url = manifest["url"]
+        repository_url = URLNormalizer.forge_url?(url) ? URLNormalizer.normalize(url) : nil
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"], repository_url: repository_url)
       end
     end
   end

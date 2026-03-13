@@ -19,6 +19,7 @@ describe Bibliothecary::Parsers::Cargo do
       ],
                                                                                                kind: "manifest",
                                                                                                success: true,
+                                                                                               repository_url: "https://github.com/example/update",
                                                                                              })
   end
 
@@ -30,6 +31,7 @@ describe Bibliothecary::Parsers::Cargo do
                                 project_name: nil,
                                 kind: "lockfile",
                                 success: true,
+                                repository_url: nil,
                               })
     expect(result[:dependencies].length).to eq(16)
     # Spot check dependencies with integrity

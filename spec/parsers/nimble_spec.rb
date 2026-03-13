@@ -21,6 +21,7 @@ describe Bibliothecary::Parsers::Nimble do
       ],
       kind: "manifest",
       success: true,
+      repository_url: nil,
     })
   end
 

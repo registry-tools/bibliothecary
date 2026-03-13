@@ -35,6 +35,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                            kind: "manifest",
                                                                                            success: true,
+                                                                                           repository_url: "http://github.com/political-memory/political_memory/",
                                                                                          })
   end
 
@@ -57,6 +58,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                                            kind: "manifest",
                                                                                                            success: true,
+                                                                                                           repository_url: nil,
                                                                                                          })
   end
 
@@ -120,6 +122,7 @@ describe Bibliothecary::Parsers::Pypi do
     ],
                                                                                                                    kind: "manifest",
                                                                                                                    success: true,
+                                                                                                                   repository_url: nil,
                                                                                                                  })
   end
 
@@ -147,6 +150,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                                                      kind: "manifest",
                                                                                                                      success: true,
+                                                                                                                     repository_url: nil,
                                                                                                                    })
   end
 
@@ -161,6 +165,7 @@ describe Bibliothecary::Parsers::Pypi do
         ],
                                                                                                                      kind: "manifest",
                                                                                                                      success: true,
+                                                                                                                     repository_url: nil,
                                                                                                                    })
     end
 
@@ -208,6 +213,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                                                      kind: "manifest",
                                                                                                                      success: true,
+                                                                                                                     repository_url: nil,
                                                                                                                    })
   end
   it "parses dependencies from requirements.txt as lockfile because of pip-compile" do
@@ -257,6 +263,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                                                        kind: "lockfile",
                                                                                                                        success: true,
+                                                                                                                       repository_url: nil,
                                                                                                                      })
   end
 
@@ -272,6 +279,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                                                                      kind: "lockfile",
                                                                                                                                      success: true,
+                                                                                                                                     repository_url: nil,
                                                                                                                                    })
   end
 
@@ -301,6 +309,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                                                              kind: "lockfile",
                                                                                                                              success: true,
+                                                                                                                             repository_url: nil,
                                                                                                                            })
   end
 
@@ -336,6 +345,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                             kind: "lockfile",
                                                                                             success: true,
+                                                                                            repository_url: nil,
                                                                                           })
   end
 
@@ -365,6 +375,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
       kind: "lockfile",
       success: true,
+      repository_url: nil,
     })
   end
 
@@ -401,6 +412,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
       kind: "lockfile",
       success: true,
+      repository_url: nil,
     })
   end
 
@@ -416,6 +428,7 @@ describe Bibliothecary::Parsers::Pypi do
       ],
                                                                                                                  kind: "lockfile",
                                                                                                                  success: true,
+                                                                                                                 repository_url: nil,
                                                                                                                })
   end
 
@@ -517,6 +530,7 @@ describe Bibliothecary::Parsers::Pypi do
     expect(results[:kind]).to eq("manifest")
     expect(results[:project_name]).to eq("tidelift")
     expect(results[:success]).to eq(true)
+    expect(results[:repository_url]).to eq("https://github.com/tidelift/tidelift")
     expect(results[:dependencies]).to match_array([
       Bibliothecary::Dependency.new(platform: "pypi", name: "python", requirement: "^3.7", type: "runtime", source: "pyproject.toml"),
       Bibliothecary::Dependency.new(platform: "pypi", name: "django", requirement: "^3.0.7", type: "runtime", source: "pyproject.toml"),
@@ -544,6 +558,7 @@ describe Bibliothecary::Parsers::Pypi do
                                                                                dependencies: [],
                                                                                kind: "manifest",
                                                                                success: true,
+                                                                               repository_url: nil,
                                                                              })
   end
 
@@ -638,7 +653,8 @@ describe Bibliothecary::Parsers::Pypi do
         Bibliothecary::Dependency.new(platform: "pypi", name: "pytest", requirement: "8.0.0", type: "develop", source: "pdm.lock"),
       ],
       kind: "lockfile",
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 

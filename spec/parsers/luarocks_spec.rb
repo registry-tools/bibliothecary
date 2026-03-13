@@ -20,6 +20,7 @@ describe Bibliothecary::Parsers::LuaRocks do
       ],
       kind: "manifest",
       success: true,
+      repository_url: nil,
     })
   end
 

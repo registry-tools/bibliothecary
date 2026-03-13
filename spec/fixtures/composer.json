@@ -42,5 +42,8 @@
 	},
 	"config": {
 		"preferred-install": "dist"
+	},
+	"support": {
+		"source": "https://github.com/laravel/laravel"
 	}
 }

@@ -523,7 +523,10 @@ module Bibliothecary
                          artifact_id.to_s.strip
                        end
 
-        ParserResult.new(dependencies: dependencies, project_name: project_name)
+        scm_url = project.locate("scm/url").first&.nodes&.first&.to_s&.strip
+        repository_url = URLNormalizer.normalize(scm_url) if scm_url && URLNormalizer.forge_url?(scm_url)
+
+        ParserResult.new(dependencies: dependencies, project_name: project_name, repository_url: repository_url)
       end
 
       def self.parse_pom_manifest(file_contents, parent_properties = {}, options: {})

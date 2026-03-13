@@ -104,7 +104,10 @@ module Bibliothecary
           end
         end
 
-        ParserResult.new(dependencies: deps, project_name: project_name)
+        homepage = file_contents.lines.find { |l| l.match?(/^homepage:/i) }&.match(/^homepage:\s*(.+)$/i)&.captures&.first&.strip
+        repository_url = URLNormalizer.forge_url?(homepage) ? URLNormalizer.normalize(homepage) : nil
+
+        ParserResult.new(dependencies: deps, project_name: project_name, repository_url: repository_url)
       end
 
       def self.parse_deps_line(line, deps, section, dep_type, source)

@@ -43,6 +43,7 @@ describe Bibliothecary::Parsers::CRAN do
       ],
                                                                                                  kind: "manifest",
                                                                                                  success: true,
+                                                                                                 repository_url: "https://github.com/hadley/ggplot2",
                                                                                                })
   end
 
@@ -75,6 +76,7 @@ describe Bibliothecary::Parsers::CRAN do
       ],
                                                                                                   kind: "manifest",
                                                                                                   success: true,
+                                                                                                  repository_url: "https://github.com/Rdatatable/data.table/wiki",
                                                                                                 })
   end
 
@@ -93,7 +95,8 @@ describe Bibliothecary::Parsers::CRAN do
         Bibliothecary::Dependency.new(platform: "cran", name: "tidyr", requirement: "1.3.0", type: "runtime", source: "renv.lock"),
       ],
       kind: "lockfile",
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 

@@ -31,7 +31,8 @@ describe Bibliothecary::Parsers::Vcpkg do
       ],
       kind: 'manifest',
       project_name: "warzone2100",
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 

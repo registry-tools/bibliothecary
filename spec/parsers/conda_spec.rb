@@ -28,6 +28,7 @@ describe Bibliothecary::Parsers::Conda do
         ],
         kind: "manifest",
         success: true,
+        repository_url: nil,
       }
     )
   end
@@ -44,6 +45,7 @@ describe Bibliothecary::Parsers::Conda do
         ],
         kind: "manifest",
         success: true,
+        repository_url: nil,
       }
     )
   end

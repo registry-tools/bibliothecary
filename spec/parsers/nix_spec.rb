@@ -19,6 +19,7 @@ describe Bibliothecary::Parsers::Nix do
       ],
       kind: "manifest",
       success: true,
+      repository_url: nil,
     })
   end
 
@@ -34,6 +35,7 @@ describe Bibliothecary::Parsers::Nix do
       ],
       kind: "lockfile",
       success: true,
+      repository_url: nil,
     })
   end
 
@@ -48,6 +50,7 @@ describe Bibliothecary::Parsers::Nix do
       ],
       kind: "lockfile",
       success: true,
+      repository_url: nil,
     })
   end
 
@@ -62,6 +65,7 @@ describe Bibliothecary::Parsers::Nix do
       ],
       kind: "lockfile",
       success: true,
+      repository_url: nil,
     })
   end
 

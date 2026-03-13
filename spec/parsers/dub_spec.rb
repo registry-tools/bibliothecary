@@ -18,6 +18,7 @@ describe Bibliothecary::Parsers::Dub do
       ],
                                                                                            kind: "manifest",
                                                                                            success: true,
+                                                                                           repository_url: nil,
                                                                                          })
   end
 
@@ -31,6 +32,7 @@ describe Bibliothecary::Parsers::Dub do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
+                                                                                         repository_url: nil,
                                                                                        })
   end
 

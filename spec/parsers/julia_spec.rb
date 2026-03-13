@@ -37,6 +37,7 @@ describe Bibliothecary::Parsers::Julia do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
+                                                                                         repository_url: nil,
                                                                                        })
   end
 
@@ -52,6 +53,7 @@ describe Bibliothecary::Parsers::Julia do
       ],
       kind: "manifest",
       success: true,
+      repository_url: nil,
     })
   end
 
@@ -67,6 +69,7 @@ describe Bibliothecary::Parsers::Julia do
       ],
       kind: "lockfile",
       success: true,
+      repository_url: nil,
     })
   end
 

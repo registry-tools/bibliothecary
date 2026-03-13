@@ -29,6 +29,7 @@ describe Bibliothecary::Parsers::Nuget do
       ],
                                                                                                    kind: "manifest",
                                                                                                    success: true,
+                                                                                                   repository_url: nil,
                                                                                                  })
   end
 
@@ -203,6 +204,7 @@ describe Bibliothecary::Parsers::Nuget do
                                                                                                              kind: "lockfile",
                                                                                                              project_name: nil,
                                                                                                              success: true,
+                                                                                                             repository_url: nil,
                                                                                                            })
   end
 
@@ -499,6 +501,7 @@ describe Bibliothecary::Parsers::Nuget do
         kind: "lockfile",
         project_name: nil,
         success: true,
+        repository_url: nil,
       }
     )
   end
@@ -519,6 +522,7 @@ describe Bibliothecary::Parsers::Nuget do
       ],
                                                                                                          kind: "manifest",
                                                                                                          success: true,
+                                                                                                         repository_url: nil,
                                                                                                        })
   end
 
@@ -539,6 +543,7 @@ describe Bibliothecary::Parsers::Nuget do
       ],
                                                                                                        kind: "manifest",
                                                                                                        success: true,
+                                                                                                       repository_url: nil,
                                                                                                      })
   end
 
@@ -553,6 +558,7 @@ describe Bibliothecary::Parsers::Nuget do
                                                                                                                   kind: "manifest",
                                                                                                                   project_name: nil,
                                                                                                                   success: true,
+                                                                                                                  repository_url: nil,
                                                                                                                 })
   end
 
@@ -567,6 +573,7 @@ describe Bibliothecary::Parsers::Nuget do
                                                                                                                      kind: "manifest",
                                                                                                                      project_name: nil,
                                                                                                                      success: true,
+                                                                                                                     repository_url: nil,
                                                                                                                    })
   end
 
@@ -625,7 +632,36 @@ describe Bibliothecary::Parsers::Nuget do
       ],
                                                                                                        kind: "manifest",
                                                                                                        success: true,
+                                                                                                       repository_url: nil,
                                                                                                      })
+  end
+
+  it "parses repository_url from RepositoryUrl in .csproj" do
+    expect(described_class.analyse_contents("example-repository-url.csproj", load_fixture("example-repository-url.csproj"))).to eq({
+                                                                                                                                     platform: "nuget",
+                                                                                                                                     path: "example-repository-url.csproj",
+                                                                                                                                     project_name: "ExamplePackage",
+                                                                                                                                     dependencies: [
+        Bibliothecary::Dependency.new(platform: "nuget", name: "Newtonsoft.Json", requirement: "13.0.1", type: "runtime", source: "example-repository-url.csproj"),
+      ],
+                                                                                                                                     kind: "manifest",
+                                                                                                                                     success: true,
+                                                                                                                                     repository_url: "https://github.com/example/nuget-test",
+                                                                                                                                   })
+  end
+
+  it "parses repository_url from repository element in .nuspec" do
+    expect(described_class.analyse_contents("example-repository-url.nuspec", load_fixture("example-repository-url.nuspec"))).to eq({
+                                                                                                                                     platform: "nuget",
+                                                                                                                                     path: "example-repository-url.nuspec",
+                                                                                                                                     project_name: nil,
+                                                                                                                                     dependencies: [
+        Bibliothecary::Dependency.new(platform: "nuget", name: "Newtonsoft.Json", requirement: "13.0.1", type: "runtime", source: "example-repository-url.nuspec"),
+      ],
+                                                                                                                                     kind: "manifest",
+                                                                                                                                     success: true,
+                                                                                                                                     repository_url: "https://github.com/example/nuget-test",
+                                                                                                                                   })
   end
 
   it "parses dependencies from paket.lock" do
@@ -642,6 +678,7 @@ describe Bibliothecary::Parsers::Nuget do
       ],
                                                                                                kind: "lockfile",
                                                                                                success: true,
+                                                                                               repository_url: nil,
                                                                                              })
   end
 
@@ -656,6 +693,7 @@ describe Bibliothecary::Parsers::Nuget do
       kind: "lockfile",
       project_name: nil,
       success: true,
+      repository_url: nil,
     }
 
     result = described_class.analyse_contents("project.assets.json", load_fixture("nuget_project.assets.json"))
@@ -685,6 +723,7 @@ describe Bibliothecary::Parsers::Nuget do
       ],
       kind: "lockfile",
       success: true,
+      repository_url: nil,
     })
   end
 

@@ -181,6 +181,8 @@ module Bibliothecary
         ParserResult.new(dependencies: dependencies)
       end
 
+      PYPROJECT_URL_PRIORITY = ["repository", "source code", "source", "github"].freeze
+
       def self.parse_pyproject(file_contents, options: {})
         deps = []
 
@@ -188,6 +190,8 @@ module Bibliothecary
 
         project_name = file_contents.dig("project", "name") ||
                        file_contents.dig("tool", "poetry", "name")
+
+        repository_url = extract_pyproject_repository_url(file_contents)
 
         # Parse poetry [tool.poetry] deps
         poetry_manifest = file_contents.fetch("tool", {}).fetch("poetry", {})
@@ -221,7 +225,26 @@ module Bibliothecary
             original_name: normalized_name == dep.name ? nil : dep.name
           )
         end
-        ParserResult.new(dependencies: dependencies, project_name: project_name)
+        ParserResult.new(dependencies: dependencies, project_name: project_name, repository_url: repository_url)
+      end
+
+      def self.extract_pyproject_repository_url(parsed_toml)
+        # Check [project.urls] with priority order (case-insensitive key match)
+        project_urls = parsed_toml.dig("project", "urls") || {}
+        PYPROJECT_URL_PRIORITY.each do |key|
+          url = project_urls.find { |k, _| k.downcase == key }&.last
+          return URLNormalizer.normalize(url) if url
+        end
+
+        # Fallback: [project.urls] "Homepage" if it's a forge URL
+        homepage_url = project_urls.find { |k, _| k.downcase == "homepage" }&.last
+        return URLNormalizer.normalize(homepage_url) if URLNormalizer.forge_url?(homepage_url)
+
+        # Fallback: [tool.poetry] repository key
+        poetry_repo = parsed_toml.dig("tool", "poetry", "repository")
+        return URLNormalizer.normalize(poetry_repo) if poetry_repo
+
+        nil
       end
 
       def self.map_dependencies(packages, type, source = nil)
@@ -341,12 +364,14 @@ module Bibliothecary
       end
 
       SETUP_PY_NAME_REGEXP = /name\s*=\s*['"]([^'"]+)['"]/
+      SETUP_PY_URL_REGEXP = /url\s*=\s*['"]([^'"]+)['"]/
 
       def self.parse_setup_py(file_contents, options: {})
         project_name = file_contents.match(SETUP_PY_NAME_REGEXP)&.then { |m| m[1] }
+        repository_url = file_contents.match(SETUP_PY_URL_REGEXP)&.then { |m| m[1] }
 
         match = file_contents.match(INSTALL_REGEXP)
-        return ParserResult.new(dependencies: [], project_name: project_name) unless match
+        return ParserResult.new(dependencies: [], project_name: project_name, repository_url: repository_url) unless match
 
         deps = []
         match[1].gsub(/',(\s)?'/, "\n").split("\n").each do |line|
@@ -363,7 +388,7 @@ module Bibliothecary
             platform: platform_name
           )
         end
-        ParserResult.new(dependencies: deps, project_name: project_name)
+        ParserResult.new(dependencies: deps, project_name: project_name, repository_url: repository_url)
       end
 
       # While the thing in the repo that PyPI is using might be either in

@@ -14,7 +14,8 @@ describe Bibliothecary::Parsers::Ollama do
       ],
       kind: 'manifest',
       project_name: nil,
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 
@@ -27,7 +28,8 @@ describe Bibliothecary::Parsers::Ollama do
       ],
       kind: 'manifest',
       project_name: nil,
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 
@@ -40,7 +42,8 @@ describe Bibliothecary::Parsers::Ollama do
       ],
       kind: 'manifest',
       project_name: nil,
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 

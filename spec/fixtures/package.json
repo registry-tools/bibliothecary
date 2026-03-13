@@ -2,6 +2,7 @@
   "name": "librarian",
   "version": "1.0.0",
   "description": "Integrate GH webhooks with Libraries.io",
+  "repository": {"type": "git", "url": "https://github.com/librarian/librarian.git"},
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",

@@ -56,7 +56,8 @@ describe Bibliothecary::Parsers::DVC do
       :dependencies=>[],
       kind: 'manifest',
       project_name: nil,
-      success: true
+      success: true,
+      repository_url: nil,
     })
   end
 

@@ -27,6 +27,7 @@ describe Bibliothecary::Parsers::Rpm do
       kind: "manifest",
       project_name: nil,
       success: true,
+      repository_url: nil,
     })
   end
 
