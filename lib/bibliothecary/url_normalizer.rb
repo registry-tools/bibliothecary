@@ -1,10 +1,21 @@
 # frozen_string_literal: true
 
 require "uri"
+require "hosted_git_info"
 
 module Bibliothecary
   module URLNormalizer
     FORGE_DOMAINS = %r{github\.com|gitlab\.com|bitbucket\.org|codeberg\.org|sr\.ht}
+
+    def self.hosted_git_info(url)
+      info = HostedGitInfo.new(normalize(url))
+      return nil unless info.valid?
+      {
+        host: info.host,
+        namespace: info.namespace,
+        project: info.project,
+      }
+    end
 
     def self.normalize(url)
       return nil if url.nil? || url.strip.empty?

@@ -134,6 +134,14 @@ module Bibliothecary
         end
       end
 
+      def self.git_info(requirement)
+        if !requirement.start_with?("@") && requirement.index("/") > 0
+          # Likely a github source or URL
+          return HostedGitInfo.new(URLNormalizer.normalize(requirement))
+        end
+        nil
+      end
+
       def self.parse_manifest(file_contents, options: {})
         # on ruby 3.2 we suddenly get this JSON error, so detect and return early: "package.json: unexpected token at ''"
         return ParserResult.new(dependencies: []) if file_contents.empty?
@@ -163,7 +171,7 @@ module Bibliothecary
               local: requirement.start_with?("file:"),
               source: options.fetch(:filename, nil),
               platform: platform_name
-            )
+            ).with_git_info(git_info(requirement))
           end
 
         dependencies += manifest.fetch("devDependencies", [])
@@ -176,7 +184,7 @@ module Bibliothecary
               local: requirement.start_with?("file:"),
               source: options.fetch(:filename, nil),
               platform: platform_name
-            )
+            ).with_git_info(git_info(requirement))
           end
 
         ParserResult.new(
@@ -443,7 +451,7 @@ module Bibliothecary
               type: "runtime",
               source: source,
               platform: platform_name
-            )
+            ).with_git_info(git_info(requirement))
           end
         end
 
@@ -459,7 +467,7 @@ module Bibliothecary
                 type: "runtime",
                 source: source,
                 platform: platform_name
-              )
+              ).with_git_info(git_info(requirement))
             end
           end
         end
