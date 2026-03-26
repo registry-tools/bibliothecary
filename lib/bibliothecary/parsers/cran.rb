@@ -36,10 +36,10 @@ module Bibliothecary
                        parse_deps(fields["Suggests"], "suggests", source) +
                        parse_deps(fields["Enhances"], "enhances", source)
 
-        ParserResult.new(dependencies: dependencies, project_name: fields["Package"], repository_url: extract_repository_url(fields))
+        ParserResult.new(dependencies: dependencies, project_name: fields["Package"], git_info: HostedGitInfo.new(extract_repo_url(fields)).to_h)
       end
 
-      def self.extract_repository_url(fields)
+      def self.extract_repo_url(fields)
         url_field = fields["URL"]
         return nil unless url_field
 

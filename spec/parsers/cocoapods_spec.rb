@@ -39,7 +39,7 @@ describe Bibliothecary::Parsers::CocoaPods do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
-                                                                                         repository_url: nil,
+                                                                                         git_info: nil,
                                                                                        })
   end
 
@@ -51,7 +51,7 @@ describe Bibliothecary::Parsers::CocoaPods do
                                 project_name: nil,
                                 kind: "lockfile",
                                 success: true,
-                                repository_url: nil,
+                                git_info: nil,
                               })
     expect(result[:dependencies].length).to eq(50)
     # Spot check dependencies with integrity from SPEC CHECKSUMS section
@@ -72,7 +72,7 @@ describe Bibliothecary::Parsers::CocoaPods do
       ],
                                                                                                          kind: "manifest",
                                                                                                          success: true,
-                                                                                                         repository_url: "https://github.com/CocoaLumberjack/CocoaLumberjack",
+                                                                                                         git_info: { host: "github.com", namespace: "CocoaLumberjack", project: "CocoaLumberjack" },
                                                                                                        })
   end
 
@@ -86,7 +86,7 @@ describe Bibliothecary::Parsers::CocoaPods do
       ],
                                                                                                                    kind: "manifest",
                                                                                                                    success: true,
-                                                                                                                   repository_url: "https://github.com/AddAloner/ALOSRPAuth",
+                                                                                                                   git_info: { host: "github.com", namespace: "AddAloner", project: "ALOSRPAuth" },
                                                                                                                  })
   end
 

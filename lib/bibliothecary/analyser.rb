@@ -26,7 +26,7 @@ module Bibliothecary
         dependencies: parser_result.dependencies,
         kind: kind,
         success: true,
-        repository_url: parser_result.repository_url,
+        git_info: parser_result.git_info,
       }
     end
 

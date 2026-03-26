@@ -8,6 +8,7 @@ module Bibliothecary
       include Bibliothecary::Analyser
 
       def self.file_patterns
+        # TODO: elm uses elm.json in newer versions
         ["elm-package.json", "elm_dependencies.json", "elm-stuff/exact-dependencies.json"]
       end
 
@@ -36,7 +37,7 @@ module Bibliothecary
           )
         end
         repository_url = URLNormalizer.normalize(manifest["repository"])
-        ParserResult.new(dependencies: dependencies, repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, git_info: HostedGitInfo.new(repository_url).to_h)
       end
 
       def self.parse_json_lock(file_contents, options: {})

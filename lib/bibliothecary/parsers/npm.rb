@@ -107,7 +107,8 @@ module Bibliothecary
               local: dep.fetch("link", false),
               source: source,
               platform: platform_name,
-              integrity: dep["integrity"]
+              integrity: dep["integrity"],
+              git_info: git_info(dep["resolved"])&.to_h,
             )
           end
       end
@@ -123,23 +124,29 @@ module Bibliothecary
                                  parse_package_lock_deps_recursively(requirement.fetch("dependencies", []), source, depth + 1)
                                end
 
+          url_source = requirement.key?("from") ? requirement["from"] : requirement["resolved"]
+
           [Dependency.new(
             name: name,
             requirement: version,
             type: type,
             source: source,
             platform: platform_name,
-            integrity: requirement["integrity"]
+            integrity: requirement["integrity"],
+            git_info: git_info(url_source)&.to_h,
           )] + child_dependencies
         end
       end
 
+      def self.might_be_git_url?(requirement)
+        requirement.start_with?("git", "github:", "gitlab:", "bitbucket:") || requirement.match("\.git#?")
+      end
+
       def self.git_info(requirement)
-        if !requirement.start_with?("@") && requirement.index("/") > 0
-          # Likely a github source or URL
-          return HostedGitInfo.new(URLNormalizer.normalize(requirement))
+        if requirement && !requirement.start_with?("@") && might_be_git_url?(requirement)
+          # Likely a github source or URL of some kind. Look for clues that this is a git URL
+          return HostedGitInfo.new(normalize_npm_url(requirement))
         end
-        nil
       end
 
       def self.parse_manifest(file_contents, options: {})
@@ -170,8 +177,9 @@ module Bibliothecary
               type: "runtime",
               local: requirement.start_with?("file:"),
               source: options.fetch(:filename, nil),
-              platform: platform_name
-            ).with_git_info(git_info(requirement))
+              platform: platform_name,
+              git_info: git_info(requirement)&.to_h,
+            )
           end
 
         dependencies += manifest.fetch("devDependencies", [])
@@ -183,14 +191,15 @@ module Bibliothecary
               type: "development",
               local: requirement.start_with?("file:"),
               source: options.fetch(:filename, nil),
-              platform: platform_name
-            ).with_git_info(git_info(requirement))
+              platform: platform_name,
+              git_info: git_info(requirement)&.to_h,
+            )
           end
 
         ParserResult.new(
           dependencies: dependencies,
           project_name: manifest["name"],
-          repository_url: normalize_repository_url(manifest["repository"])
+          git_info: HostedGitInfo.new(normalize_npm_url(manifest["repository"]))&.to_h
         )
       end
 
@@ -450,8 +459,9 @@ module Bibliothecary
               requirement: requirement,
               type: "runtime",
               source: source,
-              platform: platform_name
-            ).with_git_info(git_info(requirement))
+              platform: platform_name,
+              git_info: git_info(requirement)&.to_h,
+            )
           end
         end
 
@@ -466,8 +476,9 @@ module Bibliothecary
                 requirement: requirement,
                 type: "runtime",
                 source: source,
-                platform: platform_name
-              ).with_git_info(git_info(requirement))
+                platform: platform_name,
+                git_info: git_info(requirement)&.to_h,
+              )
             end
           end
         end
@@ -506,7 +517,8 @@ module Bibliothecary
             local: is_local,
             source: source,
             platform: platform_name,
-            integrity: info[3]
+            integrity: info[3],
+            git_info: git_info(info[3])&.to_h,
           )
         end
         ParserResult.new(dependencies: dependencies)
@@ -524,7 +536,7 @@ module Bibliothecary
         end
       end
 
-      private_class_method def self.normalize_repository_url(repo)
+      def self.normalize_npm_url(repo)
         return nil if repo.nil?
 
         url = if repo.is_a?(Hash)
@@ -535,11 +547,13 @@ module Bibliothecary
                   "https://github.com/#{str.delete_prefix("github:")}"
                 elsif str.start_with?("gitlab:")
                   "https://gitlab.com/#{str.delete_prefix("gitlab:")}"
+                elsif str.start_with?("gist:")
+                  "https://gist.github.com/#{str.delete_prefix("gist:")}"
                 elsif str.start_with?("bitbucket:")
                   "https://bitbucket.org/#{str.delete_prefix("bitbucket:")}"
                 elsif str.match?(%r{\Ahttps?://})
                   str
-                elsif str.match?(%r{\A[^/]+/[^/]+\z})
+                elsif str.match?(%r{^[\w-]+\/[\w-]+$})
                   # bare "user/repo" shorthand defaults to GitHub
                   "https://github.com/#{str}"
                 else

@@ -1,6 +1,6 @@
 (defproject clojars-json "0.1.0"
   :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :url "https://bitbucket.org/clojars/clojars-json"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]

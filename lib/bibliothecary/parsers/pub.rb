@@ -34,7 +34,7 @@ module Bibliothecary
         repo ||= manifest["homepage"] if URLNormalizer.forge_url?(manifest["homepage"])
         repository_url = URLNormalizer.normalize(repo)
 
-        ParserResult.new(dependencies: dependencies, project_name: manifest["name"], repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"], git_info: HostedGitInfo.new(repository_url).to_h)
       end
 
       def self.parse_yaml_lockfile(file_contents, options: {})

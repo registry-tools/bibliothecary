@@ -129,9 +129,7 @@ module Bibliothecary
         git_url = file_contents.match(SOURCE_GIT_REGEXP)&.captures&.first
         homepage = file_contents.match(HOMEPAGE_REGEXP)&.captures&.first
         raw_url = git_url || (homepage if homepage && URLNormalizer.forge_url?(homepage))
-        repository_url = URLNormalizer.normalize(raw_url)
-
-        ParserResult.new(dependencies: deps, project_name: project_name, repository_url: repository_url)
+        ParserResult.new(dependencies: deps, project_name: project_name, git_info: HostedGitInfo.new(URLNormalizer.normalize(raw_url)).to_h)
       end
 
       def self.parse_podfile(file_contents, options: {})
@@ -204,9 +202,8 @@ module Bibliothecary
         git_url = manifest.dig("source", "git")
         homepage = manifest["homepage"]
         raw_url = git_url || (URLNormalizer.forge_url?(homepage) ? homepage : nil)
-        repository_url = URLNormalizer.normalize(raw_url)
 
-        ParserResult.new(dependencies: dependencies, repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, git_info: HostedGitInfo.new(URLNormalizer.normalize(raw_url)).to_h)
       end
     end
   end

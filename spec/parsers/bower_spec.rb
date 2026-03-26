@@ -17,7 +17,7 @@ describe Bibliothecary::Parsers::Bower do
       ],
                                                                                                kind: "manifest",
                                                                                                success: true,
-                                                                                               repository_url: nil,
+                                                                                               git_info: nil,
                                                                                              })
   end
 

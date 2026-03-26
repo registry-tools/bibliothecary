@@ -15,7 +15,7 @@ describe Bibliothecary::Parsers::Actions do
       kind: 'manifest',
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -29,7 +29,7 @@ describe Bibliothecary::Parsers::Actions do
       kind: 'manifest',
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -44,7 +44,7 @@ describe Bibliothecary::Parsers::Actions do
       kind: 'manifest',
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -63,7 +63,7 @@ describe Bibliothecary::Parsers::Actions do
       kind: 'manifest',
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 

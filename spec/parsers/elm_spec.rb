@@ -20,7 +20,7 @@ describe Bibliothecary::Parsers::Elm do
       ],
                                                                                                            kind: "manifest",
                                                                                                            success: true,
-                                                                                                           repository_url: "https://github.com/elm-lang/package.elm-lang.org",
+                                                                                                           git_info: { host: "github.com", namespace: "elm-lang", project: "package.elm-lang.org" },
                                                                                                          })
   end
 
@@ -35,7 +35,7 @@ describe Bibliothecary::Parsers::Elm do
       ],
                                                                                                                      kind: "manifest",
                                                                                                                      success: true,
-                                                                                                                     repository_url: "https://github.com/USER/PROJECT",
+                                                                                                                     git_info: { host: "github.com", namespace: "USER", project: "PROJECT" },
                                                                                                                    })
   end
 
@@ -53,7 +53,7 @@ describe Bibliothecary::Parsers::Elm do
       ],
                                                                                                                                    kind: "lockfile",
                                                                                                                                    success: true,
-                                                                                                                                   repository_url: nil,
+                                                                                                                                   git_info: nil,
                                                                                                                                  })
   end
 

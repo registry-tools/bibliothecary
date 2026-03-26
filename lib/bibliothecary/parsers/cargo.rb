@@ -30,8 +30,18 @@ module Bibliothecary
 
         manifest.fetch_values("dependencies", "dev-dependencies").each_with_index do |deps, index|
           parsed_dependencies << deps.map do |name, requirement|
+            dep_git = nil
             if requirement.respond_to?(:fetch)
-              requirement = requirement["version"] or next
+              if requirement["git"]
+                dep_git = HostedGitInfo.new(URLNormalizer.normalize(requirement["git"]))
+                dep_git.committish = requirement["rev"] || requirement["tag"] || requirement["branch"]
+
+                requirement = requirement["git"]
+              elsif requirement["version"]
+                requirement = requirement["version"]
+              else
+                next
+              end
             end
 
             Dependency.new(
@@ -39,14 +49,15 @@ module Bibliothecary
               requirement: requirement,
               type: index.zero? ? "runtime" : "development",
               source: options.fetch(:filename, nil),
-              platform: platform_name
+              platform: platform_name,
+              git_info: dep_git&.to_h
             )
           end
         end
 
         dependencies = parsed_dependencies.flatten.compact
-        repository_url = URLNormalizer.normalize(manifest.dig("package", "repository"))
-        ParserResult.new(dependencies: dependencies, project_name: manifest.dig("package", "name"), repository_url: repository_url)
+        git_info = HostedGitInfo.new(URLNormalizer.normalize(manifest.dig("package", "repository")))
+        ParserResult.new(dependencies: dependencies, project_name: manifest.dig("package", "name"), git_info: git_info.to_h)
       end
 
       def self.parse_lockfile(file_contents, options: {})
@@ -58,8 +69,14 @@ module Bibliothecary
           source = block[/source\s*=\s*"([^"]+)"/, 1]
           checksum = block[/checksum\s*=\s*"([^"]+)"/, 1]
 
-          # Skip packages without a registry source (local/workspace packages)
-          next unless source&.start_with?("registry+")
+          next if source.nil? # Likely the root package itself, or a local/workspace package
+
+          git_info = if source.start_with?("git+")
+            HostedGitInfo.new(URLNormalizer.normalize(source))
+          end
+
+          # Skip packages without a registry source or git source (local/workspace packages)
+          next if !source.start_with?("registry+") && git_info.nil?
 
           dependencies << Dependency.new(
             name: name,
@@ -67,7 +84,8 @@ module Bibliothecary
             type: "runtime",
             source: options.fetch(:filename, nil),
             platform: platform_name,
-            integrity: checksum ? "sha256=#{checksum}" : nil
+            integrity: checksum ? "sha256=#{checksum}" : nil,
+            git_info: git_info&.to_h
           )
         end
         ParserResult.new(dependencies: dependencies)

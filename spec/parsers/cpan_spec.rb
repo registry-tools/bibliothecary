@@ -21,7 +21,7 @@ describe Bibliothecary::Parsers::CPAN do
       ],
                                                                                            kind: "lockfile",
                                                                                            success: true,
-                                                                                           repository_url: nil,
+                                                                                           git_info: nil,
                                                                                          })
   end
 
@@ -39,7 +39,7 @@ describe Bibliothecary::Parsers::CPAN do
       ],
                                                                                              kind: "lockfile",
                                                                                              success: true,
-                                                                                             repository_url: "https://github.com/creaktive/rainbarf",
+                                                                                             git_info: { host: "github.com", namespace: "creaktive", project: "rainbarf" },
                                                                                            })
   end
 

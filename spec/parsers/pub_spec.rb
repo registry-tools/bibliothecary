@@ -20,7 +20,7 @@ describe Bibliothecary::Parsers::Pub do
       ],
                                                                                                    kind: "manifest",
                                                                                                    success: true,
-                                                                                                   repository_url: "https://github.com/angulardart/angular",
+                                                                                                   git_info: { host: "github.com", namespace: "angulardart", project: "angular" },
                                                                                                  })
   end
 
@@ -37,7 +37,7 @@ describe Bibliothecary::Parsers::Pub do
       ],
                                                                                                    kind: "lockfile",
                                                                                                    success: true,
-                                                                                                   repository_url: nil,
+                                                                                                   git_info: nil,
                                                                                                  })
   end
 

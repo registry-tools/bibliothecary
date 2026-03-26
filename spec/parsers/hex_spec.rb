@@ -17,7 +17,7 @@ describe Bibliothecary::Parsers::Hex do
       kind: "manifest",
       project_name: "mixup",
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -54,7 +54,7 @@ describe Bibliothecary::Parsers::Hex do
       kind: "manifest",
       project_name: "my_gleam_app",
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -70,7 +70,7 @@ describe Bibliothecary::Parsers::Hex do
       kind: "lockfile",
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -86,7 +86,7 @@ describe Bibliothecary::Parsers::Hex do
       kind: "lockfile",
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 

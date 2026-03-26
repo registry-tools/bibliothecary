@@ -173,7 +173,7 @@ module Bibliothecary
           )
         end
 
-        ParserResult.new(dependencies: deps, project_name: project_name, repository_url: repository_url)
+        ParserResult.new(dependencies: deps, project_name: project_name, git_info: HostedGitInfo.new(repository_url).to_h)
       end
 
       def self.extract_gemspec_repository_url(file_contents)

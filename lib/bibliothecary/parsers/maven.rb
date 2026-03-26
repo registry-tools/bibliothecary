@@ -524,9 +524,13 @@ module Bibliothecary
                        end
 
         scm_url = project.locate("scm/url").first&.nodes&.first&.to_s&.strip
+        if scm_url && scm_url.start_with?("scm:git:")
+          scm_url = scm_url.delete_prefix("scm:git:")
+        end
+
         repository_url = URLNormalizer.normalize(scm_url) if scm_url && URLNormalizer.forge_url?(scm_url)
 
-        ParserResult.new(dependencies: dependencies, project_name: project_name, repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, project_name: project_name, git_info: HostedGitInfo.new(repository_url).to_h)
       end
 
       def self.parse_pom_manifest(file_contents, parent_properties = {}, options: {})

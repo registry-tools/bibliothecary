@@ -53,7 +53,7 @@ describe Bibliothecary::Parsers::Hackage do
       kind: "manifest",
       project_name: "cabal-parser",
       success: true,
-      repository_url: "https://github.com/alunduil/librariesio-cabal-parser",
+      git_info: { host: "github.com", namespace: "alunduil", project: "librariesio-cabal-parser" },
     })
   end
 
@@ -174,7 +174,7 @@ describe Bibliothecary::Parsers::Hackage do
       kind: "lockfile",
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -190,7 +190,7 @@ describe Bibliothecary::Parsers::Hackage do
       ],
       kind: "lockfile",
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -212,7 +212,7 @@ describe Bibliothecary::Parsers::Hackage do
       ],
       kind: "lockfile",
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 

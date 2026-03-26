@@ -37,7 +37,7 @@ describe Bibliothecary::ParserResult do
       attrs = {
         project_name: "foo",
         dependencies: [],
-        repository_url: nil,
+        git_info: nil,
       }
 
       dep = described_class.new(**attrs)

@@ -5,12 +5,12 @@ module Bibliothecary
   #
   # @attr_reader [Array<Dependency>] dependencies The list of Dependency objects
   # @attr_reader [String,nil] project_name The name of the project
-  # @attr_reader [String,nil] repository_url The URL of the project's source repository
+  # @attr_reader [Hash,nil] git_info The hosted git information of the project's source repository, if available.
   class ParserResult
     FIELDS = %i[
       dependencies
       project_name
-      repository_url
+      git_info
     ].freeze
 
     attr_reader(*FIELDS)
@@ -18,11 +18,11 @@ module Bibliothecary
     def initialize(
       dependencies:,
       project_name: nil,
-      repository_url: nil
+      git_info: nil
     )
       @dependencies = dependencies
       @project_name = project_name
-      @repository_url = repository_url
+      @git_info = git_info
     end
 
     def eql?(other)

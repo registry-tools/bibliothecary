@@ -32,7 +32,7 @@ describe Bibliothecary::Parsers::Vcpkg do
       kind: 'manifest',
       project_name: "warzone2100",
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 

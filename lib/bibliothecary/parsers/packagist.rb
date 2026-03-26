@@ -68,7 +68,7 @@ module Bibliothecary
                        map_dependencies(manifest, "require-dev", "development", options.fetch(:filename, nil))
         project_name = manifest["name"]
         repository_url = extract_manifest_repository_url(manifest)
-        ParserResult.new(dependencies: dependencies, project_name: project_name, repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, project_name: project_name, git_info: HostedGitInfo.new(repository_url).to_h)
       end
 
       def self.extract_manifest_repository_url(manifest)

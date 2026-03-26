@@ -22,7 +22,7 @@ describe Bibliothecary::Parsers::NPM do
       ],
                                                                                                  kind: "lockfile",
                                                                                                  success: true,
-                                                                                                 repository_url: nil,
+                                                                                                 git_info: nil,
                                                                                                })
   end
 
@@ -38,7 +38,7 @@ describe Bibliothecary::Parsers::NPM do
       ],
                                                                                                    kind: "manifest",
                                                                                                    success: true,
-                                                                                                   repository_url: "https://github.com/librarian/librarian",
+                                                                                                   git_info: { host: "github.com", namespace: "librarian", project: "librarian" },
                                                                                                  })
   end
 
@@ -49,7 +49,7 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                       kind: "lockfile",
                                                                                                                       project_name: nil,
                                                                                                                       success: true,
-                                                                                                                      repository_url: nil,
+                                                                                                                      git_info: nil,
                                                                                                                     })
     expect(described_class.analyse_contents("npm-shrinkwrap.json", load_fixture("npm-shrinkwrap.json"))[:dependencies]).to include(
       Bibliothecary::Dependency.new(platform: "npm", name: "babel", requirement: "4.7.16", type: "runtime", source: "npm-shrinkwrap.json"),
@@ -109,7 +109,7 @@ describe Bibliothecary::Parsers::NPM do
                              kind: "lockfile",
                              project_name: nil,
                              success: true,
-                             repository_url: nil,
+                             git_info: nil,
                            })
     end
 
@@ -125,7 +125,7 @@ describe Bibliothecary::Parsers::NPM do
                              kind: "lockfile",
                              project_name: nil,
                              success: true,
-                             repository_url: nil,
+                             git_info: nil,
                            })
     end
   end
@@ -140,7 +140,7 @@ describe Bibliothecary::Parsers::NPM do
         ],
                                                                                                                 kind: "lockfile",
                                                                                                                 success: true,
-                                                                                                                repository_url: nil,
+                                                                                                                git_info: nil,
                                                                                                               })
   end
 
@@ -153,7 +153,7 @@ describe Bibliothecary::Parsers::NPM do
                                 kind: "lockfile",
                                 project_name: nil,
                                 success: true,
-                                repository_url: nil,
+                                git_info: nil,
                               })
     expect(result[:dependencies].length).to eq(108)
     # Spot check key dependencies with integrity
@@ -173,7 +173,7 @@ describe Bibliothecary::Parsers::NPM do
                                 kind: "lockfile",
                                 project_name: nil,
                                 success: true,
-                                repository_url: nil,
+                                git_info: nil,
                               })
     expect(result[:dependencies].length).to eq(108)
     # Spot check key dependencies with integrity
@@ -193,7 +193,7 @@ describe Bibliothecary::Parsers::NPM do
                                 kind: "lockfile",
                                 project_name: nil,
                                 success: true,
-                                repository_url: nil,
+                                git_info: nil,
                               })
     expect(result[:dependencies].length).to eq(108)
     # Spot check key dependencies with integrity
@@ -220,7 +220,7 @@ describe Bibliothecary::Parsers::NPM do
                            kind: "manifest",
                            project_name: nil,
                            success: true,
-                           repository_url: nil,
+                           git_info: nil,
                          })
   end
 
@@ -234,7 +234,7 @@ describe Bibliothecary::Parsers::NPM do
                            kind: "manifest",
                            project_name: nil,
                            success: true,
-                           repository_url: nil,
+                           git_info: nil,
                          })
   end
 
@@ -244,11 +244,11 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                       path: "package.json",
                                                                                                                       project_name: "fake-yarn",
                                                                                                                       dependencies: [
-        Bibliothecary::Dependency.new(platform: "npm", name: "vue", requirement: "https://github.com/vuejs/vue.git#v2.6.12", type: "runtime", local: false, source: "package.json"),
+        Bibliothecary::Dependency.new(platform: "npm", name: "vue", requirement: "https://github.com/vuejs/vue.git#v2.6.12", type: "runtime", local: false, source: "package.json", git_info: { host: "github.com", namespace: "vuejs", project: "vue", committish: "v2.6.12" }),
       ],
                                                                                                                       kind: "manifest",
                                                                                                                       success: true,
-                                                                                                                      repository_url: nil,
+                                                                                                                      git_info: nil,
                                                                                                                     })
   end
 
@@ -273,7 +273,7 @@ describe Bibliothecary::Parsers::NPM do
                                 project_name: nil,
                                 kind: "lockfile",
                                 success: true,
-                                repository_url: nil,
+                                git_info: nil,
                               })
     expect(result[:dependencies].length).to eq(202)
     # Spot check key dependencies with integrity
@@ -297,7 +297,7 @@ describe Bibliothecary::Parsers::NPM do
         ],
                                                                                                                     kind: "manifest",
                                                                                                                     success: true,
-                                                                                                                    repository_url: nil,
+                                                                                                                    git_info: nil,
                                                                                                                   })
     end
 
@@ -316,7 +316,7 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                               kind: "lockfile",
                                                                                                                               project_name: nil,
                                                                                                                               success: true,
-                                                                                                                              repository_url: nil,
+                                                                                                                              git_info: nil,
                                                                                                                             })
     end
 
@@ -334,7 +334,7 @@ describe Bibliothecary::Parsers::NPM do
         ],
                                                                                                               kind: "lockfile",
                                                                                                               success: true,
-                                                                                                              repository_url: nil,
+                                                                                                              git_info: nil,
                                                                                                             })
     end
   end
@@ -353,7 +353,7 @@ describe Bibliothecary::Parsers::NPM do
       ],
                                                                                                               kind: "lockfile",
                                                                                                               success: true,
-                                                                                                              repository_url: nil,
+                                                                                                              git_info: nil,
                                                                                                             })
   end
 
@@ -382,9 +382,9 @@ describe Bibliothecary::Parsers::NPM do
     )
 
     expect(described_class.analyse_contents("package-lock.json", contents)[:dependencies]).to eq([
-      Bibliothecary::Dependency.new(platform: "npm", name: "tagged", requirement: "2.10.0", type: "runtime", source: "package-lock.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "semver", requirement: "5.5.5", type: "runtime", source: "package-lock.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "head", requirement: "ecce958093a5451452ee1dd0c0d723c9", type: "runtime", source: "package-lock.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "tagged", requirement: "2.10.0", type: "runtime", source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "tagged", committish: "v2.10.0" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "semver", requirement: "5.5.5", type: "runtime", source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "semver", committish: "semver:v5.5.5" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "head", requirement: "ecce958093a5451452ee1dd0c0d723c9", type: "runtime", source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "semver" }),
     ])
   end
 
@@ -396,7 +396,7 @@ describe Bibliothecary::Parsers::NPM do
                                                    project_name: nil,
                                                    kind: "lockfile",
                                                    success: true,
-                                                   repository_url: nil,
+                                                   git_info: nil,
                                                  })
 
     # spot-check dependencies to avoid having them all inline here.
@@ -445,7 +445,7 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                                path: "package-lock.json",
                                                                                                                                platform: "npm",
                                                                                                                                success: true,
-                                                                                                                               repository_url: nil,
+                                                                                                                               git_info: nil,
                                                                                                                              })
   end
 
@@ -461,7 +461,7 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                project_name: nil,
                                                                                                                platform: "npm",
                                                                                                                success: true,
-                                                                                                               repository_url: nil,
+                                                                                                               git_info: nil,
                                                                                                              })
   end
 
@@ -497,7 +497,7 @@ describe Bibliothecary::Parsers::NPM do
         ],
                                kind: "lockfile",
                                success: true,
-                               repository_url: nil,
+                               git_info: nil,
                              })
     end
 
@@ -514,7 +514,7 @@ describe Bibliothecary::Parsers::NPM do
                                kind: "lockfile",
                                project_name: nil,
                                success: true,
-                               repository_url: nil,
+                               git_info: nil,
                              })
     end
 
@@ -532,7 +532,7 @@ describe Bibliothecary::Parsers::NPM do
 ],
                                kind: "lockfile",
                                success: true,
-                               repository_url: nil,
+                               git_info: nil,
                              })
     end
   end
@@ -558,7 +558,7 @@ describe Bibliothecary::Parsers::NPM do
      ],
                                                                                            kind: "lockfile",
                                                                                            success: true,
-                                                                                           repository_url: nil,
+                                                                                           git_info: nil,
                                                                                          })
   end
 
@@ -591,6 +591,20 @@ describe Bibliothecary::Parsers::NPM do
       result = described_class.analyse_contents("package-lock.json", load_fixture("npm-lockfile-version-1/package-lock.json"))
       find_versions = result[:dependencies].find { |d| d.name == "find-versions" }
       expect(find_versions.integrity).to eq("sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ==")
+    end
+  end
+
+  describe "normalize_npm_url" do
+    [
+      ["npm/example", "https://github.com/npm/example"],
+      ["github:npm/example", "https://github.com/npm/example"],
+      ["gist:11081aaa281", "https://gist.github.com/11081aaa281"],
+      ["bitbucket:user/repo", "https://bitbucket.org/user/repo"],
+      ["gitlab:user/repo", "https://gitlab.com/user/repo"]
+    ].each do |input, expected|
+      it "parses #{input} shorthand URL" do
+        expect(described_class.normalize_npm_url(input)).to eq(expected)
+      end
     end
   end
 end

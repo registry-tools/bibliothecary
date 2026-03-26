@@ -19,7 +19,7 @@ describe Bibliothecary::Parsers::Clojars do
       kind: "manifest",
       project_name: "clojars-json",
       success: true,
-      repository_url: "http://example.com/FIXME",
+      git_info: { host: "bitbucket.org", namespace: "clojars", project: "clojars-json" },
     })
   end
 

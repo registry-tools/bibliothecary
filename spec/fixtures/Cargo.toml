@@ -10,6 +10,7 @@ repository = "https://github.com/example/update"
 local_crate = {path = "../local_crate"}
 rustc-serialize = "*"
 regex = {version = "*"}
+regex-syntax = { git = "https://github.com/rust-lang/regex.git", branch = "master" }
 
 [dev-dependencies]
 tempdir = "0.3"

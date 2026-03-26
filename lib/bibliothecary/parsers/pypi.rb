@@ -225,7 +225,7 @@ module Bibliothecary
             original_name: normalized_name == dep.name ? nil : dep.name
           )
         end
-        ParserResult.new(dependencies: dependencies, project_name: project_name, repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, project_name: project_name, git_info: HostedGitInfo.new(repository_url).to_h)
       end
 
       def self.extract_pyproject_repository_url(parsed_toml)
@@ -371,7 +371,7 @@ module Bibliothecary
         repository_url = file_contents.match(SETUP_PY_URL_REGEXP)&.then { |m| m[1] }
 
         match = file_contents.match(INSTALL_REGEXP)
-        return ParserResult.new(dependencies: [], project_name: project_name, repository_url: repository_url) unless match
+        return ParserResult.new(dependencies: [], project_name: project_name, git_info: HostedGitInfo.new(repository_url).to_h) unless match
 
         deps = []
         match[1].gsub(/',(\s)?'/, "\n").split("\n").each do |line|
@@ -388,7 +388,7 @@ module Bibliothecary
             platform: platform_name
           )
         end
-        ParserResult.new(dependencies: deps, project_name: project_name, repository_url: repository_url)
+        ParserResult.new(dependencies: deps, project_name: project_name, git_info: HostedGitInfo.new(repository_url).to_h)
       end
 
       # While the thing in the repo that PyPI is using might be either in

@@ -51,7 +51,8 @@ module Bibliothecary
       optional: nil,
       original_name: nil,
       source: nil,
-      integrity: nil
+      integrity: nil,
+      git_info: nil
     )
       @name = name
       @platform = platform
@@ -65,17 +66,7 @@ module Bibliothecary
       @original_name = original_name
       @source = source
       @integrity = integrity
-    end
-
-    def with_git_info(hosted_git_info)
-      return self if hosted_git_info.nil? || !hosted_git_info.valid?
-
-      @git_info = {
-        host: hosted_git_info.host,
-        namespace: hosted_git_info.namespace,
-        project: hosted_git_info.project,
-      }
-      self
+      @git_info = git_info
     end
 
     def eql?(other)

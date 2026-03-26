@@ -18,7 +18,7 @@ describe Bibliothecary::Parsers::Haxelib do
       ],
                                                                                                    kind: "manifest",
                                                                                                    success: true,
-                                                                                                   repository_url: nil,
+                                                                                                   git_info: nil,
                                                                                                  })
   end
 

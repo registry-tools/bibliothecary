@@ -45,8 +45,7 @@ module Bibliothecary
           )
         end.compact
 
-        repository_url = URLNormalizer.normalize(manifest["repository"])
-        ParserResult.new(dependencies: dependencies, project_name: manifest["name"], repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, project_name: manifest["name"], git_info: nil)
       end
 
       def self.parse_lockfile(file_contents, options: {})

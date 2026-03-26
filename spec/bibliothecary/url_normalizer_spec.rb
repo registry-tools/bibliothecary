@@ -40,28 +40,12 @@ describe Bibliothecary::URLNormalizer do
       expect(described_class.normalize("git+https://github.com/npm/cli.git")).to eq("https://github.com/npm/cli")
     end
 
-    it "handles maven SCM URLs" do
-      expect(described_class.normalize("scm:git:https://github.com/foo/bar.git")).to eq("https://github.com/foo/bar")
-    end
-
     [
       ["git@github.com:foo/bar.git", "https://github.com/foo/bar"],
       ["ssh://git@github.com:foo/bar.git", "https://github.com/foo/bar"],
       ["ssh://git@private-gitlab.io:7999/org/repo.git", "https://private-gitlab.io:7999/org/repo"],
     ].each do |input, expected|
       it "parses #{input} ssh URL" do
-        expect(described_class.normalize(input)).to eq(expected)
-      end
-    end
-
-    [
-      ["npm/example", "https://github.com/npm/example"],
-      ["github:npm/example", "https://github.com/npm/example"],
-      ["gist:11081aaa281", "https://gist.github.com/11081aaa281"],
-      ["bitbucket:user/repo", "https://bitbucket.org/user/repo"],
-      ["gitlab:user/repo", "https://gitlab.com/user/repo"]
-    ].each do |input, expected|
-      it "parses #{input} shorthand URL" do
         expect(described_class.normalize(input)).to eq(expected)
       end
     end

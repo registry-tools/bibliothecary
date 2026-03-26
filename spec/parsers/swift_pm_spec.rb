@@ -17,7 +17,7 @@ describe Bibliothecary::Parsers::SwiftPM do
       kind: "manifest",
       project_name: "swift-package-converter",
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -31,7 +31,7 @@ describe Bibliothecary::Parsers::SwiftPM do
       kind: "lockfile",
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 
@@ -46,7 +46,7 @@ describe Bibliothecary::Parsers::SwiftPM do
       kind: "lockfile",
       project_name: nil,
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 

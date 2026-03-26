@@ -25,7 +25,7 @@ describe Bibliothecary::Parsers::Bazel do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
-                                                                                         repository_url: nil,
+                                                                                         git_info: nil,
                                                                                        })
   end
   it "matches valid manifest filepaths" do

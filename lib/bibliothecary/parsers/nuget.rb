@@ -202,7 +202,7 @@ module Bibliothecary
                            URLNormalizer.normalize(raw) if raw && URLNormalizer.forge_url?(raw)
                          end
 
-        ParserResult.new(dependencies: dependencies, project_name: project_name, repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, project_name: project_name, git_info: HostedGitInfo.new(repository_url).to_h)
       rescue StandardError
         ParserResult.new(dependencies: [])
       end
@@ -230,7 +230,7 @@ module Bibliothecary
           end
         end
 
-        ParserResult.new(dependencies: dependencies, repository_url: repository_url)
+        ParserResult.new(dependencies: dependencies, git_info: HostedGitInfo.new(repository_url).to_h)
       rescue StandardError
         ParserResult.new(dependencies: [])
       end

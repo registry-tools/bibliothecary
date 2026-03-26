@@ -43,7 +43,7 @@ describe Bibliothecary::Parsers::CRAN do
       ],
                                                                                                  kind: "manifest",
                                                                                                  success: true,
-                                                                                                 repository_url: "https://github.com/hadley/ggplot2",
+                                                                                                 git_info: { host: "github.com", namespace: "hadley", project: "ggplot2" }
                                                                                                })
   end
 
@@ -76,7 +76,7 @@ describe Bibliothecary::Parsers::CRAN do
       ],
                                                                                                   kind: "manifest",
                                                                                                   success: true,
-                                                                                                  repository_url: "https://github.com/Rdatatable/data.table/wiki",
+                                                                                                  git_info: nil,
                                                                                                 })
   end
 
@@ -96,7 +96,7 @@ describe Bibliothecary::Parsers::CRAN do
       ],
       kind: "lockfile",
       success: true,
-      repository_url: nil,
+      git_info: nil,
     })
   end
 

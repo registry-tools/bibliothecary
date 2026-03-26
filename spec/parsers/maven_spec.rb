@@ -197,7 +197,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
-                                                                                         repository_url: "https://github.com/accidia/echo",
+                                                                                         git_info: { host: "github.com", namespace: "accidia", project: "echo" },
                                                                                        })
   end
 
@@ -256,7 +256,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                           kind: "manifest",
                                                                                           success: true,
-                                                                                          repository_url: "https://github.com/versioneye/versioneye_maven_plugin",
+                                                                                          git_info: { host: "github.com", namespace: "versioneye", project: "versioneye_maven_plugin" },
                                                                                         })
   end
 
@@ -302,7 +302,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                                                       kind: "manifest",
                                                                                                                       success: true,
-                                                                                                                      repository_url: "https://github.com/versioneye/versioneye_maven_plugin",
+                                                                                                                      git_info: { host: "github.com", namespace: "versioneye", project: "versioneye_maven_plugin" },
                                                                                                                     })
   end
 
@@ -327,7 +327,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                          kind: "manifest",
                                                                                          success: true,
-                                                                                         repository_url: nil,
+                                                                                         git_info: nil,
                                                                                        })
   end
 
@@ -380,7 +380,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
         ],
                                                                                                      kind: "manifest",
                                                                                                      success: true,
-                                                                                                     repository_url: nil,
+                                                                                                     git_info: nil,
                                                                                                    })
     end
 
@@ -398,7 +398,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
         ],
                                                                                                              kind: "manifest",
                                                                                                              success: true,
-                                                                                                             repository_url: nil,
+                                                                                                             git_info: nil,
                                                                                                            })
     end
   end
@@ -413,7 +413,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                                                                                            kind: "lockfile",
                                                                                                                                                            success: true,
-                                                                                                                                                           repository_url: nil,
+                                                                                                                                                           git_info: nil,
                                                                                                                                                          })
   end
 
@@ -434,7 +434,7 @@ RSpec.describe Bibliothecary::Parsers::Maven do
       ],
                                                                                                                                                                kind: "lockfile",
                                                                                                                                                                success: true,
-                                                                                                                                                               repository_url: nil,
+                                                                                                                                                               git_info: nil,
                                                                                                                                                              })
   end
 
