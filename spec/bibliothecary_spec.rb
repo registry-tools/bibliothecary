@@ -30,6 +30,7 @@ describe Bibliothecary do
           Bibliothecary::Parsers::Dub,
           Bibliothecary::Parsers::DVC,
           Bibliothecary::Parsers::Elm,
+          Bibliothecary::Parsers::GitlabCi,
           Bibliothecary::Parsers::Go,
           Bibliothecary::Parsers::Hackage,
           Bibliothecary::Parsers::Haxelib,
