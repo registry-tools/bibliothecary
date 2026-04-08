@@ -35,6 +35,7 @@ describe Bibliothecary do
           Bibliothecary::Parsers::Haxelib,
           Bibliothecary::Parsers::Hex,
           Bibliothecary::Parsers::Homebrew,
+          Bibliothecary::Parsers::Jenkins,
           Bibliothecary::Parsers::Julia,
           Bibliothecary::Parsers::LuaRocks,
           Bibliothecary::Parsers::Maven,
