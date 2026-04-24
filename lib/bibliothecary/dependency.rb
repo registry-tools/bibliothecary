@@ -35,6 +35,7 @@ module Bibliothecary
       source
       integrity
       git_info
+      resolved_source
     ].freeze
 
     attr_reader(*FIELDS)
@@ -52,7 +53,8 @@ module Bibliothecary
       original_name: nil,
       source: nil,
       integrity: nil,
-      git_info: nil
+      git_info: nil,
+      resolved_source: nil
     )
       @name = name
       @platform = platform
@@ -67,6 +69,7 @@ module Bibliothecary
       @source = source
       @integrity = integrity
       @git_info = git_info
+      @resolved_source = resolved_source
     end
 
     def eql?(other)

@@ -52,51 +52,51 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                       git_info: nil,
                                                                                                                     })
     expect(described_class.analyse_contents("npm-shrinkwrap.json", load_fixture("npm-shrinkwrap.json"))[:dependencies]).to include(
-      Bibliothecary::Dependency.new(platform: "npm", name: "babel", requirement: "4.7.16", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "body-parser", requirement: "1.13.3", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "bugsnag", requirement: "1.6.5", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "cookie-session", requirement: "1.2.0", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "debug", requirement: "2.2.0", type: "development", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "deep-diff", requirement: "0.3.2", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "deep-equal", requirement: "1.0.0", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "express", requirement: "4.13.3", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "express-session", requirement: "1.11.3", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "jade", requirement: "1.11.0", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "js-yaml", requirement: "3.4.0", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "memwatch-next", requirement: "0.2.9", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "multer", requirement: "0.1.8", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "qs", requirement: "2.4.2", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "redis", requirement: "0.12.1", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "semver", requirement: "4.3.6", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "serve-static", requirement: "1.10.0", type: "runtime", source: "npm-shrinkwrap.json"),
-      Bibliothecary::Dependency.new(platform: "npm", name: "toml", requirement: "2.3.0", type: "runtime", source: "npm-shrinkwrap.json")
+      Bibliothecary::Dependency.new(platform: "npm", name: "babel", requirement: "4.7.16", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "body-parser", requirement: "1.13.3", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "bugsnag", requirement: "1.6.5", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "cookie-session", requirement: "1.2.0", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "debug", requirement: "2.2.0", type: "development", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "deep-diff", requirement: "0.3.2", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "deep-equal", requirement: "1.0.0", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "express", requirement: "4.13.3", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "express-session", requirement: "1.11.3", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "jade", requirement: "1.11.0", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "js-yaml", requirement: "3.4.0", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "memwatch-next", requirement: "0.2.9", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "multer", requirement: "0.1.8", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "qs", requirement: "2.4.2", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "redis", requirement: "0.12.1", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "semver", requirement: "4.3.6", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "serve-static", requirement: "1.10.0", type: "runtime", direct: true, source: "npm-shrinkwrap.json"),
+      Bibliothecary::Dependency.new(platform: "npm", name: "toml", requirement: "2.3.0", type: "runtime", direct: true, source: "npm-shrinkwrap.json")
     )
   end
 
   context "with a yarn.lock" do
     let(:expected_deps) do
       [
-        Bibliothecary::Dependency.new(platform: "npm", name: "body-parser", requirement: "1.16.1", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "bytes", requirement: "2.4.0", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "content-type", requirement: "1.0.2", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "debug", requirement: "2.6.1", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "depd", requirement: "1.1.0", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "ee-first", requirement: "1.1.1", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "http-errors", requirement: "1.5.1", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "iconv-lite", requirement: "0.4.15", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "inherits", requirement: "2.0.3", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "media-typer", requirement: "0.3.0", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "mime-db", requirement: "1.26.0", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "mime-types", requirement: "2.1.14", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "ms", requirement: "0.7.2", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "on-finished", requirement: "2.3.0", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "qs", requirement: "6.2.1", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "raw-body", requirement: "2.2.0", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "setprototypeof", requirement: "1.0.2", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "statuses", requirement: "1.3.1", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "@some-scope/actual-package", requirement: "1.1.3", original_name: "alias-package-name", original_requirement: "1.1.3", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "type-is", requirement: "1.6.14", type: nil, local: false, source: "yarn.lock"),
-        Bibliothecary::Dependency.new(platform: "npm", name: "unpipe", requirement: "1.0.0", type: nil, local: false, source: "yarn.lock"),
+        Bibliothecary::Dependency.new(platform: "npm", name: "body-parser", requirement: "1.16.1", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/body-parser/-/body-parser-1.16.1.tgz#51540d045adfa7a0c6995a014bb6b1ed9b802329" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "bytes", requirement: "2.4.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/bytes/-/bytes-2.4.0.tgz#7d97196f9d5baf7f6935e25985549edd2a6c2339" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "content-type", requirement: "1.0.2", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/content-type/-/content-type-1.0.2.tgz#b7d113aee7a8dd27bd21133c4dc2529df1721eed" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "debug", requirement: "2.6.1", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "depd", requirement: "1.1.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/depd/-/depd-1.1.0.tgz#e1bd82c6aab6ced965b97b88b17ed3e528ca18c3" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "ee-first", requirement: "1.1.1", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "http-errors", requirement: "1.5.1", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/http-errors/-/http-errors-1.5.1.tgz#788c0d2c1de2c81b9e6e8c01843b6b97eb920750" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "iconv-lite", requirement: "0.4.15", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "inherits", requirement: "2.0.3", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/inherits/-/inherits-2.0.3.tgz#633c2c83e3da42a502f52466022480f4208261de" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "media-typer", requirement: "0.3.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/media-typer/-/media-typer-0.3.0.tgz#8710d7af0aa626f8fffa1ce00168545263255748" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "mime-db", requirement: "1.26.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/mime-db/-/mime-db-1.26.0.tgz#eaffcd0e4fc6935cf8134da246e2e6c35305adff" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "mime-types", requirement: "2.1.14", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/mime-types/-/mime-types-2.1.14.tgz#f7ef7d97583fcaf3b7d282b6f8b5679dab1e94ee" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "ms", requirement: "0.7.2", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/ms/-/ms-0.7.2.tgz#ae25cf2512b3885a1d95d7f037868d8431124765" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "on-finished", requirement: "2.3.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/on-finished/-/on-finished-2.3.0.tgz#20f1336481b083cd75337992a16971aa2d906947" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "qs", requirement: "6.2.1", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/qs/-/qs-6.2.1.tgz#ce03c5ff0935bc1d9d69a9f14cbd18e568d67625" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "raw-body", requirement: "2.2.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/raw-body/-/raw-body-2.2.0.tgz#994976cf6a5096a41162840492f0bdc5d6e7fb96" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "setprototypeof", requirement: "1.0.2", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/setprototypeof/-/setprototypeof-1.0.2.tgz#81a552141ec104b88e89ce383103ad5c66564d08" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "statuses", requirement: "1.3.1", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/statuses/-/statuses-1.3.1.tgz#faf51b9eb74aaef3b3acf4ad5f61abf24cb7b93e" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "@some-scope/actual-package", requirement: "1.1.3", original_name: "alias-package-name", original_requirement: "1.1.3", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/actual-package/-/actual-package-1.1.3.tgz#e219639c17ded1ca0789092dd54a03826b817cb2" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "type-is", requirement: "1.6.14", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/type-is/-/type-is-1.6.14.tgz#e219639c17ded1ca0789092dd54a03826b817cb2" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "unpipe", requirement: "1.0.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec" }),
       ]
     end
 
@@ -136,7 +136,7 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                 path: "yarn.lock",
                                                                                                                 project_name: nil,
                                                                                                                 dependencies: [
-          Bibliothecary::Dependency.new(platform: "npm", name: "vue", requirement: "2.6.12", type: nil, local: false, source: "yarn.lock"),
+          Bibliothecary::Dependency.new(platform: "npm", name: "vue", requirement: "2.6.12", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :git, url: "https://github.com/vuejs/vue.git#bb253db0b3e17124b6d1fe93fbf2db35470a1347", host: "github.com", namespace: "vuejs", project: "vue", committish: "bb253db0b3e17124b6d1fe93fbf2db35470a1347" }),
         ],
                                                                                                                 kind: "lockfile",
                                                                                                                 success: true,
@@ -158,9 +158,9 @@ describe Bibliothecary::Parsers::NPM do
     expect(result[:dependencies].length).to eq(108)
     # Spot check key dependencies with integrity
     expect(result[:dependencies]).to include(
-      Bibliothecary::Dependency.new(platform: "npm", name: "@babel/types", requirement: "7.28.1", type: "runtime", source: "pnpm-lock.yaml", integrity: "sha512-x0LvFTekgSX+83TI28Y9wYPUfzrnl2aT5+5QLnO6v7mSJYtEEevuDRN0F0uSHRk1G1IWZC43o00Y0xDDrpBGPQ=="),
-      Bibliothecary::Dependency.new(platform: "npm", name: "zod", requirement: "4.0.5", original_name: "alias-package", original_requirement: "4.0.5", type: "runtime", source: "pnpm-lock.yaml", integrity: "sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA=="),
-      Bibliothecary::Dependency.new(platform: "npm", name: "mocha", requirement: "2.5.3", type: "development", source: "pnpm-lock.yaml", integrity: "sha512-jNt2iEk9FPmZLzL+sm4FNyOIDYXf2wUU6L4Cc8OIKK/kzgMHKPi4YhTZqG4bW4kQVdIv6wutDybRhXfdnujA1Q==")
+      Bibliothecary::Dependency.new(platform: "npm", name: "@babel/types", requirement: "7.28.1", type: "runtime", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-x0LvFTekgSX+83TI28Y9wYPUfzrnl2aT5+5QLnO6v7mSJYtEEevuDRN0F0uSHRk1G1IWZC43o00Y0xDDrpBGPQ==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "zod", requirement: "4.0.5", original_name: "alias-package", original_requirement: "4.0.5", type: "runtime", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "mocha", requirement: "2.5.3", type: "development", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-jNt2iEk9FPmZLzL+sm4FNyOIDYXf2wUU6L4Cc8OIKK/kzgMHKPi4YhTZqG4bW4kQVdIv6wutDybRhXfdnujA1Q==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil })
     )
   end
 
@@ -178,9 +178,9 @@ describe Bibliothecary::Parsers::NPM do
     expect(result[:dependencies].length).to eq(108)
     # Spot check key dependencies with integrity
     expect(result[:dependencies]).to include(
-      Bibliothecary::Dependency.new(platform: "npm", name: "@babel/types", requirement: "7.28.1", type: "runtime", source: "pnpm-lock.yaml", integrity: "sha512-x0LvFTekgSX+83TI28Y9wYPUfzrnl2aT5+5QLnO6v7mSJYtEEevuDRN0F0uSHRk1G1IWZC43o00Y0xDDrpBGPQ=="),
-      Bibliothecary::Dependency.new(platform: "npm", name: "zod", requirement: "4.0.5", original_name: "alias-package", original_requirement: "4.0.5", type: "runtime", source: "pnpm-lock.yaml", integrity: "sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA=="),
-      Bibliothecary::Dependency.new(platform: "npm", name: "mocha", requirement: "2.5.3", type: "development", source: "pnpm-lock.yaml", integrity: "sha512-jNt2iEk9FPmZLzL+sm4FNyOIDYXf2wUU6L4Cc8OIKK/kzgMHKPi4YhTZqG4bW4kQVdIv6wutDybRhXfdnujA1Q==")
+      Bibliothecary::Dependency.new(platform: "npm", name: "@babel/types", requirement: "7.28.1", type: "runtime", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-x0LvFTekgSX+83TI28Y9wYPUfzrnl2aT5+5QLnO6v7mSJYtEEevuDRN0F0uSHRk1G1IWZC43o00Y0xDDrpBGPQ==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "zod", requirement: "4.0.5", original_name: "alias-package", original_requirement: "4.0.5", type: "runtime", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "mocha", requirement: "2.5.3", type: "development", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-jNt2iEk9FPmZLzL+sm4FNyOIDYXf2wUU6L4Cc8OIKK/kzgMHKPi4YhTZqG4bW4kQVdIv6wutDybRhXfdnujA1Q==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil })
     )
   end
 
@@ -198,9 +198,9 @@ describe Bibliothecary::Parsers::NPM do
     expect(result[:dependencies].length).to eq(108)
     # Spot check key dependencies with integrity
     expect(result[:dependencies]).to include(
-      Bibliothecary::Dependency.new(platform: "npm", name: "@babel/types", requirement: "7.28.1", type: "runtime", source: "pnpm-lock.yaml", integrity: "sha512-x0LvFTekgSX+83TI28Y9wYPUfzrnl2aT5+5QLnO6v7mSJYtEEevuDRN0F0uSHRk1G1IWZC43o00Y0xDDrpBGPQ=="),
-      Bibliothecary::Dependency.new(platform: "npm", name: "zod", requirement: "3.24.2", original_name: "alias-package", original_requirement: "3.24.2", type: "runtime", source: "pnpm-lock.yaml", integrity: "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ=="),
-      Bibliothecary::Dependency.new(platform: "npm", name: "mocha", requirement: "2.5.3", type: "development", source: "pnpm-lock.yaml", integrity: "sha512-jNt2iEk9FPmZLzL+sm4FNyOIDYXf2wUU6L4Cc8OIKK/kzgMHKPi4YhTZqG4bW4kQVdIv6wutDybRhXfdnujA1Q==")
+      Bibliothecary::Dependency.new(platform: "npm", name: "@babel/types", requirement: "7.28.1", type: "runtime", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-x0LvFTekgSX+83TI28Y9wYPUfzrnl2aT5+5QLnO6v7mSJYtEEevuDRN0F0uSHRk1G1IWZC43o00Y0xDDrpBGPQ==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "zod", requirement: "3.24.2", original_name: "alias-package", original_requirement: "3.24.2", type: "runtime", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "mocha", requirement: "2.5.3", type: "development", direct: true, source: "pnpm-lock.yaml", integrity: "sha512-jNt2iEk9FPmZLzL+sm4FNyOIDYXf2wUU6L4Cc8OIKK/kzgMHKPi4YhTZqG4bW4kQVdIv6wutDybRhXfdnujA1Q==", resolved_source: { type: :registry, registry_url: nil, tarball_url: nil })
     )
   end
 
@@ -278,9 +278,9 @@ describe Bibliothecary::Parsers::NPM do
     expect(result[:dependencies].length).to eq(202)
     # Spot check key dependencies with integrity
     expect(result[:dependencies]).to include(
-      Bibliothecary::Dependency.new(platform: "npm", name: "accepts", requirement: "1.3.3", type: "runtime", source: "package-lock.json", integrity: "sha1-w8p0NJOGSMPg2cHjKN1otiLChMo="),
-      Bibliothecary::Dependency.new(platform: "npm", name: "express", requirement: "4.15.3", type: "runtime", source: "package-lock.json", integrity: "sha1-urZdDwOqgMNYQIly/HAPkWlEtmI="),
-      Bibliothecary::Dependency.new(platform: "npm", name: "yarn", requirement: "0.24.6", type: "runtime", source: "package-lock.json", integrity: "sha1-ShKESAAEJfRd9c1igLADpiAQRPw=")
+      Bibliothecary::Dependency.new(platform: "npm", name: "accepts", requirement: "1.3.3", type: "runtime", direct: true, source: "package-lock.json", integrity: "sha1-w8p0NJOGSMPg2cHjKN1otiLChMo=", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/accepts/-/accepts-1.3.3.tgz" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "express", requirement: "4.15.3", type: "runtime", direct: true, source: "package-lock.json", integrity: "sha1-urZdDwOqgMNYQIly/HAPkWlEtmI=", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/express/-/express-4.15.3.tgz" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "yarn", requirement: "0.24.6", type: "runtime", direct: true, source: "package-lock.json", integrity: "sha1-ShKESAAEJfRd9c1igLADpiAQRPw=", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/yarn/-/yarn-0.24.6.tgz" })
     )
   end
 
@@ -306,12 +306,12 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                               platform: "npm",
                                                                                                                               path: "package-lock.json",
                                                                                                                               dependencies: [
-          Bibliothecary::Dependency.new(platform: "npm", name: "js-tokens", requirement: "4.0.0", type: "runtime", local: false, source: "package-lock.json", integrity: "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "left-pad", requirement: "1.3.0", type: "runtime", local: false, source: "package-lock.json", integrity: "sha512-XI5MPzVNApjAyhQzphX8BkmKsKUxD4LdyK24iZeQGinBN9yTQT3bFlCBy/aVx2HrNcqQGsdot8ghrjyrvMCoEA=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "lodash", requirement: "4.17.21", type: "development", local: false, source: "package-lock.json", integrity: "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "loose-envify", requirement: "1.4.0", type: "runtime", local: false, source: "package-lock.json", integrity: "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "other-package", requirement: "*", type: "runtime", local: true, source: "package-lock.json"),
-          Bibliothecary::Dependency.new(platform: "npm", name: "react", requirement: "18.3.1", type: "runtime", local: false, source: "package-lock.json", integrity: "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ=="),
+          Bibliothecary::Dependency.new(platform: "npm", name: "js-tokens", requirement: "4.0.0", type: "runtime", direct: false, local: false, source: "package-lock.json", integrity: "sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "left-pad", requirement: "1.3.0", type: "runtime", direct: true, local: false, source: "package-lock.json", integrity: "sha512-XI5MPzVNApjAyhQzphX8BkmKsKUxD4LdyK24iZeQGinBN9yTQT3bFlCBy/aVx2HrNcqQGsdot8ghrjyrvMCoEA==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/left-pad/-/left-pad-1.3.0.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "lodash", requirement: "4.17.21", type: "development", direct: false, local: false, source: "package-lock.json", integrity: "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "loose-envify", requirement: "1.4.0", type: "runtime", direct: false, local: false, source: "package-lock.json", integrity: "sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "other-package", requirement: "*", type: "runtime", direct: true, local: true, source: "package-lock.json", resolved_source: { type: :local, path: "src/other-package", workspace: false, link: true }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "react", requirement: "18.3.1", type: "runtime", direct: true, local: false, source: "package-lock.json", integrity: "sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/react/-/react-18.3.1.tgz" }),
         ],
                                                                                                                               kind: "lockfile",
                                                                                                                               project_name: nil,
@@ -326,11 +326,11 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                               path: "yarn.lock",
                                                                                                               project_name: nil,
                                                                                                               dependencies: [
-          Bibliothecary::Dependency.new(platform: "npm", name: "js-tokens", requirement: "4.0.0", type: nil, local: false, source: "yarn.lock"),
-          Bibliothecary::Dependency.new(platform: "npm", name: "left-pad", requirement: "1.3.0", type: nil, local: false, source: "yarn.lock"),
-          Bibliothecary::Dependency.new(platform: "npm", name: "loose-envify", requirement: "1.4.0", type: nil, local: false, source: "yarn.lock"),
+          Bibliothecary::Dependency.new(platform: "npm", name: "js-tokens", requirement: "4.0.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/js-tokens/-/js-tokens-4.0.0.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "left-pad", requirement: "1.3.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/left-pad/-/left-pad-1.3.0.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "loose-envify", requirement: "1.4.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/loose-envify/-/loose-envify-1.4.0.tgz" }),
           Bibliothecary::Dependency.new(platform: "npm", name: "other-package", requirement: "1.0.0", type: nil, local: true, source: "yarn.lock"),
-          Bibliothecary::Dependency.new(platform: "npm", name: "react", requirement: "18.3.1", type: nil, local: false, source: "yarn.lock"),
+          Bibliothecary::Dependency.new(platform: "npm", name: "react", requirement: "18.3.1", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/react/-/react-18.3.1.tgz" }),
         ],
                                                                                                               kind: "lockfile",
                                                                                                               success: true,
@@ -382,9 +382,9 @@ describe Bibliothecary::Parsers::NPM do
     )
 
     expect(described_class.analyse_contents("package-lock.json", contents)[:dependencies]).to eq([
-      Bibliothecary::Dependency.new(platform: "npm", name: "tagged", requirement: "2.10.0", type: "runtime", source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "tagged", committish: "v2.10.0" }),
-      Bibliothecary::Dependency.new(platform: "npm", name: "semver", requirement: "5.5.5", type: "runtime", source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "semver", committish: "semver:v5.5.5" }),
-      Bibliothecary::Dependency.new(platform: "npm", name: "head", requirement: "ecce958093a5451452ee1dd0c0d723c9", type: "runtime", source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "semver" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "tagged", requirement: "2.10.0", type: "runtime", direct: true, source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "tagged", committish: "v2.10.0" }, resolved_source: { type: :git, url: "https://github.com/some-co/tagged.git#v2.10.0", host: "github.com", namespace: "some-co", project: "tagged", committish: "v2.10.0" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "semver", requirement: "5.5.5", type: "runtime", direct: true, source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "semver", committish: "semver:v5.5.5" }, resolved_source: { type: :git, url: "https://github.com/some-co/semver.git#semver:v5.5.5", host: "github.com", namespace: "some-co", project: "semver", committish: "semver:v5.5.5" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "head", requirement: "ecce958093a5451452ee1dd0c0d723c9", type: "runtime", direct: true, source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "semver" }, resolved_source: { type: :git, url: "https://github.com/some-co/semver", host: "github.com", namespace: "some-co", project: "semver" }),
     ])
   end
 
@@ -407,12 +407,14 @@ describe Bibliothecary::Parsers::NPM do
                                                                 name: "@vue/test-utils",
                                                                 requirement: "1.0.0-beta.13",
                                                                 type: "runtime",
+                                                                direct: true,
                                                                 source: "2018-package-lock/package-lock.json",
-                                                                integrity: "sha512-HVhh4n8i661BJpVKp2SFUWT9J4kSFFSXF/ZvtlEI2ndEKjNx+1BUGB5V3t3ls1OIDQEFOVoJEuwz3xP/PsCnPQ=="))
+                                                                integrity: "sha512-HVhh4n8i661BJpVKp2SFUWT9J4kSFFSXF/ZvtlEI2ndEKjNx+1BUGB5V3t3ls1OIDQEFOVoJEuwz3xP/PsCnPQ==",
+                                                                resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/@vue/test-utils/-/test-utils-1.0.0-beta.13.tgz" }))
     expect(dependencies.select { |dep| dep.type == "runtime" }.length).to eq(373)
     expect(dependencies.select { |dep| dep.type == "development" }.length).to eq(1601)
     # a nested dependency
-    expect(dependencies).to include(Bibliothecary::Dependency.new(platform: "npm", name: "acorn", requirement: "4.0.13", type: "development", source: "2018-package-lock/package-lock.json", integrity: "sha1-EFSVrlNh1pe9GVyCUZLhrX8lN4c="))
+    expect(dependencies).to include(Bibliothecary::Dependency.new(platform: "npm", name: "acorn", requirement: "4.0.13", type: "development", direct: false, source: "2018-package-lock/package-lock.json", integrity: "sha1-EFSVrlNh1pe9GVyCUZLhrX8lN4c=", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/acorn/-/acorn-4.0.13.tgz" }))
   end
 
   it "matches valid manifest filepaths" do
@@ -436,9 +438,9 @@ describe Bibliothecary::Parsers::NPM do
   it "parses dependencies that have multiple versions in package-lock.json" do
     expect(described_class.analyse_contents("package-lock.json", load_fixture("multiple_versions/package-lock.json"))).to eq({
                                                                                                                                dependencies: [
-                                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: "runtime", local: false, source: "package-lock.json", integrity: "sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ=="),
-                                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.3", type: "runtime", local: false, source: "package-lock.json", integrity: "sha512-Aqi54Mk9uYTjVexLnR67rTyBusmwd04cLkHy9hNvk3+G3nT2Oyg7E0l4XVbOaNwIvQ3hHeYxGcyEy+mKreyBFQ=="),
-                                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.2", type: "runtime", local: false, source: "package-lock.json", integrity: "sha512-xyuBZk1XYqQkB687hMQqrCP+J9bdJSjPpZwdmmNjyxKW1K3LDXxqxw91Egaqkh/yheBIVtKPt4/1eybKVdCx3g=="),
+                                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: "runtime", local: false, direct: true, source: "package-lock.json", integrity: "sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/find-versions/-/find-versions-4.0.0.tgz" }),
+                                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.3", type: "runtime", local: false, direct: false, source: "package-lock.json", integrity: "sha512-Aqi54Mk9uYTjVexLnR67rTyBusmwd04cLkHy9hNvk3+G3nT2Oyg7E0l4XVbOaNwIvQ3hHeYxGcyEy+mKreyBFQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/semver-regex/-/semver-regex-3.1.3.tgz" }),
+                                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.2", type: "runtime", local: false, direct: true, source: "package-lock.json", integrity: "sha512-xyuBZk1XYqQkB687hMQqrCP+J9bdJSjPpZwdmmNjyxKW1K3LDXxqxw91Egaqkh/yheBIVtKPt4/1eybKVdCx3g==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/semver-regex/-/semver-regex-4.0.2.tgz" }),
                                                                                                                                ],
                                                                                                                                kind: "lockfile",
                                                                                                                                project_name: nil,
@@ -452,9 +454,9 @@ describe Bibliothecary::Parsers::NPM do
   it "parses dependencies that have multiple versions in yarn.json" do
     expect(described_class.analyse_contents("yarn.lock", load_fixture("multiple_versions/yarn.lock"))).to eq({
                                                                                                                dependencies: [
-                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: nil, local: false, source: "yarn.lock"),
-                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.3", type: nil, local: false, source: "yarn.lock"),
-                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.2", type: nil, local: false, source: "yarn.lock"),
+                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/find-versions/-/find-versions-4.0.0.tgz#3c57e573bf97769b8cb8df16934b627915da4965" }),
+                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.3", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/semver-regex/-/semver-regex-3.1.3.tgz#b2bcc6f97f63269f286994e297e229b6245d0dc3" }),
+                                                                                                                 Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.2", type: nil, local: false, source: "yarn.lock", resolved_source: { type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/semver-regex/-/semver-regex-4.0.2.tgz#fd3124efe81647b33eb90a9de07cb72992424a02" }),
                                                                                                                ],
                                                                                                                kind: "lockfile",
                                                                                                                path: "yarn.lock",
@@ -491,9 +493,9 @@ describe Bibliothecary::Parsers::NPM do
                                path: "npm-lockfile-version-1/package-lock.json",
                                project_name: nil,
                                dependencies: [
-          Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: "runtime", source: "npm-lockfile-version-1/package-lock.json", integrity: "sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.4", type: "runtime", source: "npm-lockfile-version-1/package-lock.json", integrity: "sha512-6IiqeZNgq01qGf0TId0t3NvKzSvUsjcpdEO3AQNeIjR6A2+ckTnQlDpl4qu1bjRv0RzN3FP9hzFmws3lKqRWkA=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.5", type: "runtime", source: "npm-lockfile-version-1/package-lock.json", integrity: "sha512-hunMQrEy1T6Jr2uEVjrAIqjwWcQTgOAcIM52C8MY1EZSD3DDNft04XzvYKPqjED65bNVVko0YI38nYeEHCX3yw=="),
+          Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: "runtime", direct: true, source: "npm-lockfile-version-1/package-lock.json", integrity: "sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/find-versions/-/find-versions-4.0.0.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.4", type: "runtime", direct: false, source: "npm-lockfile-version-1/package-lock.json", integrity: "sha512-6IiqeZNgq01qGf0TId0t3NvKzSvUsjcpdEO3AQNeIjR6A2+ckTnQlDpl4qu1bjRv0RzN3FP9hzFmws3lKqRWkA==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/semver-regex/-/semver-regex-3.1.4.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.5", type: "runtime", direct: true, source: "npm-lockfile-version-1/package-lock.json", integrity: "sha512-hunMQrEy1T6Jr2uEVjrAIqjwWcQTgOAcIM52C8MY1EZSD3DDNft04XzvYKPqjED65bNVVko0YI38nYeEHCX3yw==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/semver-regex/-/semver-regex-4.0.5.tgz" }),
         ],
                                kind: "lockfile",
                                success: true,
@@ -507,9 +509,9 @@ describe Bibliothecary::Parsers::NPM do
                                platform: "npm",
                                path: "npm-lockfile-version-2/package-lock.json",
                                dependencies: [
-          Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: "runtime", local: false, source: "npm-lockfile-version-2/package-lock.json", integrity: "sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.4", type: "runtime", local: false, source: "npm-lockfile-version-2/package-lock.json", integrity: "sha512-6IiqeZNgq01qGf0TId0t3NvKzSvUsjcpdEO3AQNeIjR6A2+ckTnQlDpl4qu1bjRv0RzN3FP9hzFmws3lKqRWkA=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.5", type: "runtime", local: false, source: "npm-lockfile-version-2/package-lock.json", integrity: "sha512-hunMQrEy1T6Jr2uEVjrAIqjwWcQTgOAcIM52C8MY1EZSD3DDNft04XzvYKPqjED65bNVVko0YI38nYeEHCX3yw=="),
+          Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: "runtime", direct: true, local: false, source: "npm-lockfile-version-2/package-lock.json", integrity: "sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/find-versions/-/find-versions-4.0.0.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.4", type: "runtime", direct: false, local: false, source: "npm-lockfile-version-2/package-lock.json", integrity: "sha512-6IiqeZNgq01qGf0TId0t3NvKzSvUsjcpdEO3AQNeIjR6A2+ckTnQlDpl4qu1bjRv0RzN3FP9hzFmws3lKqRWkA==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/semver-regex/-/semver-regex-3.1.4.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.5", type: "runtime", direct: true, local: false, source: "npm-lockfile-version-2/package-lock.json", integrity: "sha512-hunMQrEy1T6Jr2uEVjrAIqjwWcQTgOAcIM52C8MY1EZSD3DDNft04XzvYKPqjED65bNVVko0YI38nYeEHCX3yw==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/semver-regex/-/semver-regex-4.0.5.tgz" }),
 ],
                                kind: "lockfile",
                                project_name: nil,
@@ -525,10 +527,10 @@ describe Bibliothecary::Parsers::NPM do
                                path: "npm-lockfile-version-3/package-lock.json",
                                project_name: nil,
                                dependencies: [
-          Bibliothecary::Dependency.new(platform: "npm", name: "@some-scope/actual-package", requirement: "1.1.3", original_name: "alias-package-name", original_requirement: "1.1.3", type: "runtime", local: false, source: "npm-lockfile-version-3/package-lock.json", integrity: "sha512-Mo7Byt8jDBtk09ix3hwEYv3hASTAYYTjvyqGnZP+WpxdZHKXb+HTCiNg4tLKDXAharS36RBq8tBQ/AdPbdQn3g=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: "runtime", local: false, source: "npm-lockfile-version-3/package-lock.json", integrity: "sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.4", type: "runtime", local: false, source: "npm-lockfile-version-3/package-lock.json", integrity: "sha512-6IiqeZNgq01qGf0TId0t3NvKzSvUsjcpdEO3AQNeIjR6A2+ckTnQlDpl4qu1bjRv0RzN3FP9hzFmws3lKqRWkA=="),
-          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.5", type: "runtime", local: false, source: "npm-lockfile-version-3/package-lock.json", integrity: "sha512-hunMQrEy1T6Jr2uEVjrAIqjwWcQTgOAcIM52C8MY1EZSD3DDNft04XzvYKPqjED65bNVVko0YI38nYeEHCX3yw=="),
+          Bibliothecary::Dependency.new(platform: "npm", name: "@some-scope/actual-package", requirement: "1.1.3", original_name: "alias-package-name", original_requirement: "1.1.3", type: "runtime", direct: false, local: false, source: "npm-lockfile-version-3/package-lock.json", integrity: "sha512-Mo7Byt8jDBtk09ix3hwEYv3hASTAYYTjvyqGnZP+WpxdZHKXb+HTCiNg4tLKDXAharS36RBq8tBQ/AdPbdQn3g==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/days-until-christmas/-/actual-package-1.1.3.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "find-versions", requirement: "4.0.0", type: "runtime", direct: true, local: false, source: "npm-lockfile-version-3/package-lock.json", integrity: "sha512-wgpWy002tA+wgmO27buH/9KzyEOQnKsG/R0yrcjPT9BOFm0zRBVQbZ95nRGXWMywS8YR5knRbpohio0bcJABxQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/find-versions/-/find-versions-4.0.0.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "3.1.4", type: "runtime", direct: false, local: false, source: "npm-lockfile-version-3/package-lock.json", integrity: "sha512-6IiqeZNgq01qGf0TId0t3NvKzSvUsjcpdEO3AQNeIjR6A2+ckTnQlDpl4qu1bjRv0RzN3FP9hzFmws3lKqRWkA==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/semver-regex/-/semver-regex-3.1.4.tgz" }),
+          Bibliothecary::Dependency.new(platform: "npm", name: "semver-regex", requirement: "4.0.5", type: "runtime", direct: true, local: false, source: "npm-lockfile-version-3/package-lock.json", integrity: "sha512-hunMQrEy1T6Jr2uEVjrAIqjwWcQTgOAcIM52C8MY1EZSD3DDNft04XzvYKPqjED65bNVVko0YI38nYeEHCX3yw==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/semver-regex/-/semver-regex-4.0.5.tgz" }),
 ],
                                kind: "lockfile",
                                success: true,
@@ -544,17 +546,17 @@ describe Bibliothecary::Parsers::NPM do
                                                                                            project_name: nil,
                                                                                            dependencies: [
 
-       Bibliothecary::Dependency.new(platform: "npm", name: "@types/bun", requirement: "1.2.5", type: "development", local: false, source: "bun.lock", integrity: "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "@types/node", requirement: "22.13.10", type: "runtime", local: false, source: "bun.lock", integrity: "sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "@types/ws", requirement: "8.5.14", type: "runtime", local: false, source: "bun.lock", integrity: "sha512-bd/YFLW+URhBzMXurx7lWByOu+xzU9+kb3RboOteXYDfW+tr+JZa99OyNmPINEGB/ahzKrEuc8rcv4gnpJmxTw=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "zod", requirement: "3.24.2", original_name: "alias-package", original_requirement: "3.24.2", type: "runtime", local: false, source: "bun.lock", integrity: "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "babel", requirement: "6.23.0", type: "runtime", local: false, source: "bun.lock", integrity: "sha512-ZDcCaI8Vlct8PJ3DvmyqUz+5X2Ylz3ZuuItBe/74yXosk2dwyVo/aN7MCJ8HJzhnnJ+6yP4o+lDgG9MBe91DLA=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "bun-types", requirement: "1.2.5", type: "runtime", local: false, source: "bun.lock", integrity: "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "isarray", requirement: "file:../isarray", type: "runtime", local: true, source: "bun.lock", integrity: nil),
-       Bibliothecary::Dependency.new(platform: "npm", name: "lodash", requirement: "4.17.21", type: "runtime", local: false, source: "bun.lock", integrity: "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "prettier", requirement: "3.5.3", type: "development", local: false, source: "bun.lock", integrity: "sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "typescript", requirement: "5.8.2", type: "runtime", local: false, source: "bun.lock", integrity: "sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ=="),
-       Bibliothecary::Dependency.new(platform: "npm", name: "undici-types", requirement: "6.20.0", type: "runtime", local: false, source: "bun.lock", integrity: "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg=="),
+       Bibliothecary::Dependency.new(platform: "npm", name: "@types/bun", requirement: "1.2.5", type: "development", direct: true, local: false, source: "bun.lock", integrity: "sha512-w2OZTzrZTVtbnJew1pdFmgV99H0/L+Pvw+z1P67HaR18MHOzYnTYOi6qzErhK8HyT+DB782ADVPPE92Xu2/Opg==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/@types/bun/-/bun-1.2.5.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "@types/node", requirement: "22.13.10", type: "runtime", direct: false, local: false, source: "bun.lock", integrity: "sha512-I6LPUvlRH+O6VRUqYOcMudhaIdUVWfsjnZavnsraHvpBwaEyMN29ry+0UVJhImYL16xsscu0aske3yA+uPOWfw==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/@types/node/-/node-22.13.10.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "@types/ws", requirement: "8.5.14", type: "runtime", direct: false, local: false, source: "bun.lock", integrity: "sha512-bd/YFLW+URhBzMXurx7lWByOu+xzU9+kb3RboOteXYDfW+tr+JZa99OyNmPINEGB/ahzKrEuc8rcv4gnpJmxTw==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/@types/ws/-/ws-8.5.14.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "zod", requirement: "3.24.2", original_name: "alias-package", original_requirement: "3.24.2", type: "runtime", direct: true, local: false, source: "bun.lock", integrity: "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/zod/-/zod-3.24.2.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "babel", requirement: "6.23.0", type: "runtime", direct: true, local: false, source: "bun.lock", integrity: "sha512-ZDcCaI8Vlct8PJ3DvmyqUz+5X2Ylz3ZuuItBe/74yXosk2dwyVo/aN7MCJ8HJzhnnJ+6yP4o+lDgG9MBe91DLA==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/babel/-/babel-6.23.0.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "bun-types", requirement: "1.2.5", type: "runtime", direct: false, local: false, source: "bun.lock", integrity: "sha512-3oO6LVGGRRKI4kHINx5PIdIgnLRb7l/SprhzqXapmoYkFl5m4j6EvALvbDVuuBFaamB46Ap6HCUxIXNLCGy+tg==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/bun-types/-/bun-types-1.2.5.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "isarray", requirement: "file:../isarray", type: "runtime", direct: true, local: true, source: "bun.lock", integrity: nil, resolved_source: { type: :local, path: "../isarray", workspace: false, link: false }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "lodash", requirement: "4.17.21", type: "runtime", direct: true, local: false, source: "bun.lock", integrity: "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/lodash/-/lodash-4.17.21.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "prettier", requirement: "3.5.3", type: "development", direct: true, local: false, source: "bun.lock", integrity: "sha512-QQtaxnoDJeAkDvDKWCLiwIXkTgRhwYDEQCghU9Z6q03iyek/rxRh/2lC3HB7P8sWT2xC/y5JDctPLBIGzHKbhw==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/prettier/-/prettier-3.5.3.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "typescript", requirement: "5.8.2", type: "runtime", direct: false, local: false, source: "bun.lock", integrity: "sha512-aJn6wq13/afZp/jT9QZmwEjDqqvSGp1VT5GVg+f/t6/oVyrgXM6BY1h9BRh/O5p3PlUPAe+WuiEZOmb/49RqoQ==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/typescript/-/typescript-5.8.2.tgz" }),
+       Bibliothecary::Dependency.new(platform: "npm", name: "undici-types", requirement: "6.20.0", type: "runtime", direct: false, local: false, source: "bun.lock", integrity: "sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==", resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/undici-types/-/undici-types-6.20.0.tgz" }),
      ],
                                                                                            kind: "lockfile",
                                                                                            success: true,
@@ -605,6 +607,160 @@ describe Bibliothecary::Parsers::NPM do
       it "parses #{input} shorthand URL" do
         expect(described_class.normalize_npm_url(input)).to eq(expected)
       end
+    end
+  end
+
+  describe ".resolve_source" do
+    it "returns nil for nil input" do
+      expect(described_class.resolve_source(nil)).to be_nil
+    end
+
+    it "returns nil for empty string" do
+      expect(described_class.resolve_source("")).to be_nil
+    end
+
+    it "parses a registry tarball URL" do
+      expect(described_class.resolve_source("https://registry.npmjs.org/foo/-/foo-1.0.0.tgz")).to eq({
+        type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/foo/-/foo-1.0.0.tgz"
+      })
+    end
+
+    it "parses a yarnpkg registry URL" do
+      expect(described_class.resolve_source("https://registry.yarnpkg.com/foo/-/foo-1.0.0.tgz#abc123")).to eq({
+        type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/foo/-/foo-1.0.0.tgz#abc123"
+      })
+    end
+
+    it "parses a git URL" do
+      result = described_class.resolve_source("git+https://github.com/vuejs/vue.git#v2.6.12")
+      expect(result[:type]).to eq(:git)
+      expect(result[:host]).to eq("github.com")
+      expect(result[:namespace]).to eq("vuejs")
+      expect(result[:project]).to eq("vue")
+    end
+
+    it "parses a file: URL as local" do
+      expect(described_class.resolve_source("file:src/other-package")).to eq({
+        type: :local, path: "src/other-package", workspace: false, link: false
+      })
+    end
+
+    it "parses a link: URL as local with link: true" do
+      expect(described_class.resolve_source("link:../my-pkg")).to eq({
+        type: :local, path: "../my-pkg", workspace: false, link: true
+      })
+    end
+
+    it "parses a workspace: URL as local with workspace: true" do
+      expect(described_class.resolve_source("workspace:*")).to eq({
+        type: :local, path: "*", workspace: true, link: false
+      })
+    end
+
+    it "returns local when link: true is set" do
+      expect(described_class.resolve_source("src/other-package", link: true)).to eq({
+        type: :local, path: "src/other-package", workspace: false, link: true
+      })
+    end
+
+    it "infers registry from config when URL is nil" do
+      config = { default_registry: "https://registry.npmjs.org", scoped_registries: {} }
+      result = described_class.resolve_source(nil, registry_config: config, package_name: "foo")
+      expect(result).to eq({ type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: nil })
+    end
+  end
+
+  describe ".parse_npmrc_registries" do
+    it "parses default registry" do
+      result = described_class.parse_npmrc_registries("registry=https://registry.npmjs.org/")
+      expect(result).to eq({ default_registry: "https://registry.npmjs.org", scoped_registries: {} })
+    end
+
+    it "parses scoped registries" do
+      contents = <<~NPMRC
+        @myorg:registry=https://npm.myorg.com/
+        @other:registry=https://other.registry.dev
+      NPMRC
+      result = described_class.parse_npmrc_registries(contents)
+      expect(result[:scoped_registries]).to eq({
+        "@myorg" => "https://npm.myorg.com",
+        "@other" => "https://other.registry.dev"
+      })
+    end
+
+    it "ignores auth lines and comments" do
+      contents = <<~NPMRC
+        registry=https://registry.npmjs.org
+        # this is a comment
+        //registry.npmjs.org/:_authToken=secret
+        ; another comment
+      NPMRC
+      result = described_class.parse_npmrc_registries(contents)
+      expect(result).to eq({ default_registry: "https://registry.npmjs.org", scoped_registries: {} })
+    end
+
+    it "returns empty config for nil input" do
+      expect(described_class.parse_npmrc_registries(nil)).to eq({ default_registry: nil, scoped_registries: {} })
+    end
+  end
+
+  describe ".parse_yarnrc_yml_registries" do
+    it "parses npmRegistryServer and npmScopes" do
+      contents = <<~YAML
+        npmRegistryServer: "https://registry.yarnpkg.com/"
+        npmScopes:
+          myorg:
+            npmRegistryServer: "https://npm.myorg.com"
+      YAML
+      result = described_class.parse_yarnrc_yml_registries(contents)
+      expect(result).to eq({
+        default_registry: "https://registry.yarnpkg.com",
+        scoped_registries: { "@myorg" => "https://npm.myorg.com" }
+      })
+    end
+
+    it "returns empty config for nil input" do
+      expect(described_class.parse_yarnrc_yml_registries(nil)).to eq({ default_registry: nil, scoped_registries: {} })
+    end
+  end
+
+  describe ".registry_url_for" do
+    let(:config) do
+      {
+        default_registry: "https://registry.npmjs.org",
+        scoped_registries: { "@myorg" => "https://npm.myorg.com" }
+      }
+    end
+
+    it "returns scoped registry for scoped package" do
+      expect(described_class.registry_url_for("@myorg/foo", config)).to eq("https://npm.myorg.com")
+    end
+
+    it "falls back to default for unscoped package" do
+      expect(described_class.registry_url_for("lodash", config)).to eq("https://registry.npmjs.org")
+    end
+
+    it "falls back to default for unknown scope" do
+      expect(described_class.registry_url_for("@other/bar", config)).to eq("https://registry.npmjs.org")
+    end
+
+    it "returns nil with no config" do
+      expect(described_class.registry_url_for("foo", nil)).to be_nil
+    end
+  end
+
+  describe "config file matching" do
+    it "matches .npmrc files" do
+      expect(described_class.match?(".npmrc")).to be_truthy
+      expect(described_class.match?("project/.npmrc")).to be_truthy
+    end
+
+    it "matches .yarnrc.yml files" do
+      expect(described_class.match?(".yarnrc.yml")).to be_truthy
+    end
+
+    it "matches bunfig.toml files" do
+      expect(described_class.match?("bunfig.toml")).to be_truthy
     end
   end
 end

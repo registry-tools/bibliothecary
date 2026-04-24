@@ -81,7 +81,8 @@ describe Bibliothecary::Dependency do
           host: "github.com",
           namespace: "owner",
           project: "repo",
-        }
+        },
+        resolved_source: nil
       }
 
       dep = described_class.new(**attrs)
