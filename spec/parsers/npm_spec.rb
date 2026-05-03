@@ -244,7 +244,7 @@ describe Bibliothecary::Parsers::NPM do
                                                                                                                       path: "package.json",
                                                                                                                       project_name: "fake-yarn",
                                                                                                                       dependencies: [
-        Bibliothecary::Dependency.new(platform: "npm", name: "vue", requirement: "https://github.com/vuejs/vue.git#v2.6.12", type: "runtime", direct: true, local: false, source: "package.json", git_info: { host: "github.com", namespace: "vuejs", project: "vue", committish: "v2.6.12" }),
+        Bibliothecary::Dependency.new(platform: "npm", name: "vue", requirement: "https://github.com/vuejs/vue.git#v2.6.12", type: "runtime", direct: true, local: false, source: "package.json", resolved_source: { type: :git, url: "https://github.com/vuejs/vue.git#v2.6.12", host: "github.com", namespace: "vuejs", project: "vue", committish: "v2.6.12" }),
       ],
                                                                                                                       kind: "manifest",
                                                                                                                       success: true,
@@ -382,9 +382,9 @@ describe Bibliothecary::Parsers::NPM do
     )
 
     expect(described_class.analyse_contents("package-lock.json", contents)[:dependencies]).to eq([
-      Bibliothecary::Dependency.new(platform: "npm", name: "tagged", requirement: "2.10.0", type: "runtime", direct: true, source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "tagged", committish: "v2.10.0" }, resolved_source: { type: :git, url: "https://github.com/some-co/tagged.git#v2.10.0", host: "github.com", namespace: "some-co", project: "tagged", committish: "v2.10.0" }),
-      Bibliothecary::Dependency.new(platform: "npm", name: "semver", requirement: "5.5.5", type: "runtime", direct: true, source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "semver", committish: "semver:v5.5.5" }, resolved_source: { type: :git, url: "https://github.com/some-co/semver.git#semver:v5.5.5", host: "github.com", namespace: "some-co", project: "semver", committish: "semver:v5.5.5" }),
-      Bibliothecary::Dependency.new(platform: "npm", name: "head", requirement: "ecce958093a5451452ee1dd0c0d723c9", type: "runtime", direct: true, source: "package-lock.json", git_info: { host: "github.com", namespace: "some-co", project: "semver" }, resolved_source: { type: :git, url: "https://github.com/some-co/semver", host: "github.com", namespace: "some-co", project: "semver" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "tagged", requirement: "2.10.0", type: "runtime", direct: true, source: "package-lock.json", resolved_source: { type: :git, url: "https://github.com/some-co/tagged.git#v2.10.0", host: "github.com", namespace: "some-co", project: "tagged", committish: "v2.10.0" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "semver", requirement: "5.5.5", type: "runtime", direct: true, source: "package-lock.json", resolved_source: { type: :git, url: "https://github.com/some-co/semver.git#semver:v5.5.5", host: "github.com", namespace: "some-co", project: "semver", committish: "semver:v5.5.5" }),
+      Bibliothecary::Dependency.new(platform: "npm", name: "head", requirement: "ecce958093a5451452ee1dd0c0d723c9", type: "runtime", direct: true, source: "package-lock.json", resolved_source: { type: :git, url: "https://github.com/some-co/semver", host: "github.com", namespace: "some-co", project: "semver" }),
     ])
   end
 
@@ -620,60 +620,74 @@ describe Bibliothecary::Parsers::NPM do
     end
 
     it "parses a registry tarball URL" do
-      expect(described_class.resolve_source("https://registry.npmjs.org/foo/-/foo-1.0.0.tgz")).to eq({
-        type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: "https://registry.npmjs.org/foo/-/foo-1.0.0.tgz"
-      })
+      result = described_class.resolve_source("https://registry.npmjs.org/foo/-/foo-1.0.0.tgz")
+      expect(result).to be_a(Bibliothecary::ResolvedSource)
+      expect(result.type).to eq(:registry)
+      expect(result.registry_url).to eq("https://registry.npmjs.org")
+      expect(result.tarball_url).to eq("https://registry.npmjs.org/foo/-/foo-1.0.0.tgz")
     end
 
     it "parses a yarnpkg registry URL" do
-      expect(described_class.resolve_source("https://registry.yarnpkg.com/foo/-/foo-1.0.0.tgz#abc123")).to eq({
-        type: :registry, registry_url: "https://registry.yarnpkg.com", tarball_url: "https://registry.yarnpkg.com/foo/-/foo-1.0.0.tgz#abc123"
-      })
+      result = described_class.resolve_source("https://registry.yarnpkg.com/foo/-/foo-1.0.0.tgz#abc123")
+      expect(result.type).to eq(:registry)
+      expect(result.registry_url).to eq("https://registry.yarnpkg.com")
+      expect(result.tarball_url).to eq("https://registry.yarnpkg.com/foo/-/foo-1.0.0.tgz#abc123")
     end
 
     it "parses a git URL" do
       result = described_class.resolve_source("git+https://github.com/vuejs/vue.git#v2.6.12")
-      expect(result[:type]).to eq(:git)
-      expect(result[:host]).to eq("github.com")
-      expect(result[:namespace]).to eq("vuejs")
-      expect(result[:project]).to eq("vue")
+      expect(result).to be_a(Bibliothecary::ResolvedSource)
+      expect(result.type).to eq(:git)
+      expect(result.host).to eq("github.com")
+      expect(result.namespace).to eq("vuejs")
+      expect(result.project).to eq("vue")
     end
 
     it "parses a file: URL as local" do
-      expect(described_class.resolve_source("file:src/other-package")).to eq({
-        type: :local, path: "src/other-package", workspace: false, link: false
-      })
+      result = described_class.resolve_source("file:src/other-package")
+      expect(result).to be_a(Bibliothecary::ResolvedSource)
+      expect(result.type).to eq(:local)
+      expect(result.path).to eq("src/other-package")
+      expect(result.workspace).to eq(false)
+      expect(result.link).to eq(false)
     end
 
     it "parses a link: URL as local with link: true" do
-      expect(described_class.resolve_source("link:../my-pkg")).to eq({
-        type: :local, path: "../my-pkg", workspace: false, link: true
-      })
+      result = described_class.resolve_source("link:../my-pkg")
+      expect(result.type).to eq(:local)
+      expect(result.path).to eq("../my-pkg")
+      expect(result.link).to eq(true)
     end
 
     it "parses a workspace: URL as local with workspace: true" do
-      expect(described_class.resolve_source("workspace:*")).to eq({
-        type: :local, path: "*", workspace: true, link: false
-      })
+      result = described_class.resolve_source("workspace:*")
+      expect(result.type).to eq(:local)
+      expect(result.path).to eq("*")
+      expect(result.workspace).to eq(true)
     end
 
     it "returns local when link: true is set" do
-      expect(described_class.resolve_source("src/other-package", link: true)).to eq({
-        type: :local, path: "src/other-package", workspace: false, link: true
-      })
+      result = described_class.resolve_source("src/other-package", link: true)
+      expect(result.type).to eq(:local)
+      expect(result.path).to eq("src/other-package")
+      expect(result.link).to eq(true)
     end
 
     it "infers registry from config when URL is nil" do
       config = { default_registry: "https://registry.npmjs.org", scoped_registries: {} }
       result = described_class.resolve_source(nil, registry_config: config, package_name: "foo")
-      expect(result).to eq({ type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: nil })
+      expect(result).to be_a(Bibliothecary::ResolvedSource)
+      expect(result.type).to eq(:registry)
+      expect(result.registry_url).to eq("https://registry.npmjs.org")
+      expect(result.tarball_url).to be_nil
     end
 
     it "parses a GitHub Packages registry tarball URL as registry, not git" do
       url = "https://npm.pkg.github.com/@myorg/mypackage/-/mypackage-1.2.3.tgz"
-      expect(described_class.resolve_source(url)).to eq({
-        type: :registry, registry_url: "https://npm.pkg.github.com", tarball_url: url
-      })
+      result = described_class.resolve_source(url)
+      expect(result.type).to eq(:registry)
+      expect(result.registry_url).to eq("https://npm.pkg.github.com")
+      expect(result.tarball_url).to eq(url)
     end
   end
 

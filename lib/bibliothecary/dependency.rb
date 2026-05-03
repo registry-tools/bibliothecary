@@ -20,6 +20,7 @@ module Bibliothecary
   #   dependency, e.g. "src/package.json".
   # @attr_reader [String] integrity An optional integrity hash from the lockfile, stored as-is
   #   (e.g. "sha512-abc123..." for npm, "h1:xyz..." for go.sum).
+  # @attr_reader [ResolvedSource] resolved_source Where this dependency was resolved from (git, local, or registry).
   class Dependency
     FIELDS = %i[
       name
@@ -34,7 +35,6 @@ module Bibliothecary
       original_name
       source
       integrity
-      git_info
       resolved_source
     ].freeze
 
@@ -53,7 +53,6 @@ module Bibliothecary
       original_name: nil,
       source: nil,
       integrity: nil,
-      git_info: nil,
       resolved_source: nil
     )
       @name = name
@@ -68,8 +67,7 @@ module Bibliothecary
       @original_name = original_name
       @source = source
       @integrity = integrity
-      @git_info = git_info
-      @resolved_source = resolved_source
+      @resolved_source = ResolvedSource.from_h(resolved_source)
     end
 
     def eql?(other)
@@ -82,7 +80,13 @@ module Bibliothecary
     end
 
     def to_h
-      FIELDS.to_h { |f| [f, public_send(f)] }
+      FIELDS.to_h do |f|
+        if f == :resolved_source
+          [f, resolved_source&.to_h]
+        else
+          [f, public_send(f)]
+        end
+      end
     end
 
     def hash

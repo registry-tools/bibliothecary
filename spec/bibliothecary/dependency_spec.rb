@@ -18,11 +18,13 @@ describe Bibliothecary::Dependency do
         original_requirement: "1.0.0.rc1",
         source: "package.json",
         integrity: "sha512-abc123==",
-        git_info: {
+        resolved_source: {
+          type: :git,
+          url: "https://github.com/owner/repo",
           host: "github.com",
           namespace: "owner",
           project: "repo",
-      }
+        }
       )
 
       expect(dep.name).to eq("foo")
@@ -37,11 +39,11 @@ describe Bibliothecary::Dependency do
       expect(dep.original_requirement).to eq("1.0.0.rc1")
       expect(dep.source).to eq("package.json")
       expect(dep.integrity).to eq("sha512-abc123==")
-      expect(dep.git_info).to eq({
-        host: "github.com",
-        namespace: "owner",
-        project: "repo",
-      })
+      expect(dep.resolved_source).to be_a(Bibliothecary::ResolvedSource)
+      expect(dep.resolved_source.type).to eq(:git)
+      expect(dep.resolved_source.host).to eq("github.com")
+      expect(dep.resolved_source.namespace).to eq("owner")
+      expect(dep.resolved_source.project).to eq("repo")
     end
 
     it "only requires name and requirement" do
@@ -77,17 +79,33 @@ describe Bibliothecary::Dependency do
         original_requirement: "1.0.0.rc1",
         source: "package.json",
         integrity: "sha512-abc123==",
-        git_info: {
-          host: "github.com",
-          namespace: "owner",
-          project: "repo",
-        },
-        resolved_source: nil
+        resolved_source: nil,
       }
 
       dep = described_class.new(**attrs)
 
       expect(dep.to_h).to eq(attrs)
+    end
+
+    it "serializes resolved_source back to a hash in to_h" do
+      dep = described_class.new(
+        name: "foo",
+        requirement: "1.0.0",
+        platform: "maven",
+        resolved_source: { type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: nil }
+      )
+
+      expect(dep.to_h[:resolved_source]).to eq({ type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: nil })
+    end
+
+    it "stores resolved_source as a ResolvedSource object when given a hash" do
+      dep = described_class.new(
+        name: "foo",
+        requirement: "1.0.0",
+        platform: "maven",
+        resolved_source: { type: :git, url: "https://github.com/foo/bar" }
+      )
+      expect(dep.resolved_source).to be_a(Bibliothecary::ResolvedSource)
     end
 
     it "sets empty requirement to wildcard" do

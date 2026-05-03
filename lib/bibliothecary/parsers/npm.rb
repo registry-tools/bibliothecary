@@ -183,7 +183,6 @@ module Bibliothecary
               source: source,
               platform: platform_name,
               integrity: dep["integrity"],
-              git_info: git_info(dep["resolved"])&.to_h,
               resolved_source: resolve_source(dep["resolved"], link: is_link, registry_config: registry_config, package_name: name),
             )
           end
@@ -210,7 +209,6 @@ module Bibliothecary
             source: source,
             platform: platform_name,
             integrity: requirement["integrity"],
-            git_info: git_info(url_source)&.to_h,
             resolved_source: resolve_source(url_source, registry_config: registry_config, package_name: name),
           )] + child_dependencies
         end
@@ -218,13 +216,6 @@ module Bibliothecary
 
       def self.might_be_git_url?(requirement)
         requirement.start_with?("git", "github:", "gitlab:", "bitbucket:") || requirement.match(/\.git(#|$)/)
-      end
-
-      def self.git_info(requirement)
-        if requirement && !requirement.start_with?("@") && might_be_git_url?(requirement)
-          # Likely a github source or URL of some kind. Look for clues that this is a git URL
-          return HostedGitInfo.new(normalize_npm_url(requirement))
-        end
       end
 
       def self.parse_manifest(file_contents, options: {})
@@ -257,7 +248,7 @@ module Bibliothecary
               direct: true,
               source: options.fetch(:filename, nil),
               platform: platform_name,
-              git_info: git_info(requirement)&.to_h,
+              resolved_source: manifest_git_resolved_source(requirement),
             )
           end
 
@@ -272,7 +263,7 @@ module Bibliothecary
               direct: true,
               source: options.fetch(:filename, nil),
               platform: platform_name,
-              git_info: git_info(requirement)&.to_h,
+              resolved_source: manifest_git_resolved_source(requirement),
             )
           end
 
@@ -597,7 +588,7 @@ module Bibliothecary
               type: "runtime",
               source: source,
               platform: platform_name,
-              git_info: git_info(requirement)&.to_h,
+              resolved_source: manifest_git_resolved_source(requirement),
             )
           end
         end
@@ -614,7 +605,7 @@ module Bibliothecary
                 type: "runtime",
                 source: source,
                 platform: platform_name,
-                git_info: git_info(requirement)&.to_h,
+                resolved_source: manifest_git_resolved_source(requirement),
               )
             end
           end
@@ -661,7 +652,6 @@ module Bibliothecary
             source: source,
             platform: platform_name,
             integrity: info[3],
-            git_info: git_info(info[3])&.to_h,
             resolved_source: resolve_source(tarball_url || (is_local ? version : nil), link: false, registry_config: registry_config, package_name: info_name),
           )
         end
@@ -805,14 +795,14 @@ module Bibliothecary
       # Central dispatch for determining the resolved source of a dependency.
       def self.resolve_source(resolved_url, link: false, registry_config: nil, package_name: nil)
         if link
-          return { type: :local, path: resolved_url.to_s, workspace: false, link: true }
+          return ResolvedSource.local(path: resolved_url.to_s, workspace: false, link: true)
         end
 
         if resolved_url.nil? || resolved_url.to_s.empty?
           # No URL — try to infer from registry config
           if registry_config && package_name
             inferred = registry_url_for(package_name, registry_config)
-            return { type: :registry, registry_url: inferred, tarball_url: nil } if inferred
+            return ResolvedSource.registry(registry_url: inferred, tarball_url: nil) if inferred
           end
           return nil
         end
@@ -820,15 +810,15 @@ module Bibliothecary
         resolved_str = resolved_url.to_s
 
         if resolved_str.start_with?("file:")
-          return { type: :local, path: resolved_str.delete_prefix("file:"), workspace: false, link: false }
+          return ResolvedSource.local(path: resolved_str.delete_prefix("file:"), workspace: false, link: false)
         end
 
         if resolved_str.start_with?("link:")
-          return { type: :local, path: resolved_str.delete_prefix("link:"), workspace: false, link: true }
+          return ResolvedSource.local(path: resolved_str.delete_prefix("link:"), workspace: false, link: true)
         end
 
         if resolved_str.start_with?("workspace:")
-          return { type: :local, path: resolved_str.delete_prefix("workspace:"), workspace: true, link: false }
+          return ResolvedSource.local(path: resolved_str.delete_prefix("workspace:"), workspace: true, link: false)
         end
 
         if might_be_git_url?(resolved_str)
@@ -838,27 +828,25 @@ module Bibliothecary
         parse_registry_resolved(resolved_str, registry_config: registry_config, package_name: package_name)
       end
 
-      # Parse a git resolved URL into a resolved_source hash.
+      # Parse a git resolved URL into a ResolvedSource.
       def self.parse_git_resolved(url_string)
         normalized = normalize_npm_url(url_string)
         info = HostedGitInfo.new(normalized)
-        result = { type: :git, url: normalized }
         if info.valid?
-          result[:host] = info.host
-          result[:namespace] = info.namespace
-          result[:project] = info.project
-          result[:committish] = info.committish if info.committish
+          ResolvedSource.git(url: normalized, host: info.host, namespace: info.namespace,
+                             project: info.project, committish: info.committish)
+        else
+          ResolvedSource.git(url: normalized)
         end
-        result
       end
 
-      # Parse a registry tarball URL into a resolved_source hash.
+      # Parse a registry tarball URL into a ResolvedSource.
       def self.parse_registry_resolved(resolved_url, registry_config: nil, package_name: nil)
         if resolved_url && !resolved_url.empty?
           begin
             uri = URI.parse(resolved_url)
             registry_url = "#{uri.scheme}://#{uri.host}"
-            return { type: :registry, registry_url: registry_url, tarball_url: resolved_url }
+            return ResolvedSource.registry(registry_url: registry_url, tarball_url: resolved_url)
           rescue URI::InvalidURIError
             # Fall through to config-based inference
           end
@@ -866,7 +854,7 @@ module Bibliothecary
 
         if registry_config && package_name
           inferred = registry_url_for(package_name, registry_config)
-          return { type: :registry, registry_url: inferred, tarball_url: nil } if inferred
+          return ResolvedSource.registry(registry_url: inferred, tarball_url: nil) if inferred
         end
 
         nil
@@ -894,10 +882,18 @@ module Bibliothecary
         # Registry package with integrity but no tarball URL — infer from config
         if resolution["integrity"]
           inferred = registry_url_for(package_name, registry_config)
-          return { type: :registry, registry_url: inferred, tarball_url: nil }
+          return ResolvedSource.registry(registry_url: inferred, tarball_url: nil)
         end
 
         nil
+      end
+
+      # Returns a git ResolvedSource for a requirement string that looks like a git URL,
+      # or nil for regular version specs.
+      def self.manifest_git_resolved_source(requirement)
+        return nil unless requirement && !requirement.start_with?("@") && might_be_git_url?(requirement)
+
+        parse_git_resolved(requirement)
       end
 
     private_class_method def self.transform_tree_to_array(deps_by_name, source = nil)

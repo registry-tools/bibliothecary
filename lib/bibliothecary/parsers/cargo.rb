@@ -30,13 +30,22 @@ module Bibliothecary
 
         manifest.fetch_values("dependencies", "dev-dependencies").each_with_index do |deps, index|
           parsed_dependencies << deps.map do |name, requirement|
-            dep_git = nil
+            dep_resolved_source = nil
             if requirement.respond_to?(:fetch)
               if requirement["git"]
-                dep_git = HostedGitInfo.new(URLNormalizer.normalize(requirement["git"]))
+                git_url = requirement["git"]
+                normalized_base = URLNormalizer.normalize(git_url)
+                dep_git = HostedGitInfo.new(normalized_base)
                 dep_git.committish = requirement["rev"] || requirement["tag"] || requirement["branch"]
 
-                requirement = requirement["git"]
+                full_url = dep_git.committish ? "#{normalized_base}##{dep_git.committish}" : normalized_base
+                dep_resolved_source = if dep_git.valid?
+                  ResolvedSource.git(url: full_url, host: dep_git.host, namespace: dep_git.namespace, project: dep_git.project, committish: dep_git.committish)
+                else
+                  ResolvedSource.git(url: full_url)
+                end
+
+                requirement = git_url
               elsif requirement["version"]
                 requirement = requirement["version"]
               else
@@ -50,7 +59,7 @@ module Bibliothecary
               type: index.zero? ? "runtime" : "development",
               source: options.fetch(:filename, nil),
               platform: platform_name,
-              git_info: dep_git&.to_h
+              resolved_source: dep_resolved_source
             )
           end
         end
@@ -71,12 +80,18 @@ module Bibliothecary
 
           next if source.nil? # Likely the root package itself, or a local/workspace package
 
-          git_info = if source.start_with?("git+")
-            HostedGitInfo.new(URLNormalizer.normalize(source))
+          git_source = if source.start_with?("git+")
+            normalized = URLNormalizer.normalize(source)
+            info = HostedGitInfo.new(normalized)
+            if info.valid?
+              ResolvedSource.git(url: normalized, host: info.host, namespace: info.namespace, project: info.project, committish: info.committish)
+            else
+              ResolvedSource.git(url: normalized)
+            end
           end
 
           # Skip packages without a registry source or git source (local/workspace packages)
-          next if !source.start_with?("registry+") && git_info.nil?
+          next if !source.start_with?("registry+") && git_source.nil?
 
           dependencies << Dependency.new(
             name: name,
@@ -85,7 +100,7 @@ module Bibliothecary
             source: options.fetch(:filename, nil),
             platform: platform_name,
             integrity: checksum ? "sha256=#{checksum}" : nil,
-            git_info: git_info&.to_h
+            resolved_source: git_source
           )
         end
         ParserResult.new(dependencies: dependencies)

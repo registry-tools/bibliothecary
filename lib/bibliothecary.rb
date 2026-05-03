@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "bibliothecary/version"
+require "bibliothecary/resolved_source"
 require "bibliothecary/dependency"
 require "bibliothecary/parser_result"
 require "bibliothecary/url_normalizer"
