@@ -668,6 +668,13 @@ describe Bibliothecary::Parsers::NPM do
       result = described_class.resolve_source(nil, registry_config: config, package_name: "foo")
       expect(result).to eq({ type: :registry, registry_url: "https://registry.npmjs.org", tarball_url: nil })
     end
+
+    it "parses a GitHub Packages registry tarball URL as registry, not git" do
+      url = "https://npm.pkg.github.com/@myorg/mypackage/-/mypackage-1.2.3.tgz"
+      expect(described_class.resolve_source(url)).to eq({
+        type: :registry, registry_url: "https://npm.pkg.github.com", tarball_url: url
+      })
+    end
   end
 
   describe ".parse_npmrc_registries" do

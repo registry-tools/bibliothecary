@@ -217,7 +217,7 @@ module Bibliothecary
       end
 
       def self.might_be_git_url?(requirement)
-        requirement.start_with?("git", "github:", "gitlab:", "bitbucket:") || requirement.match("\.git#?")
+        requirement.start_with?("git", "github:", "gitlab:", "bitbucket:") || requirement.match(/\.git(#|$)/)
       end
 
       def self.git_info(requirement)
